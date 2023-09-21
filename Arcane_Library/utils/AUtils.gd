@@ -46,3 +46,43 @@ static func objectToDictionary(obj) -> Dictionary:
 
 		result[name] = value
 	return result
+
+# static func dictionaryToObject(d: Dictionary, obj: Object) -> void:
+# 	if typeof(d) != TYPE_DICTIONARY:
+# 		return
+	
+# 	for key in d.keys():
+# 		var value = d[key]
+# 		if typeof(value) == TYPE_DICTIONARY:
+# 			# Replace 'Object' with the type you're expecting for sub-objects
+# 			var subObj = preload("YourObjectType.gd").new()  
+# 			dictionaryToObject(value, subObj)
+# 			obj.set(key, subObj)
+# 		elif typeof(value) == TYPE_ARRAY:
+# 			var newArray: Array = []
+# 			for item in value:
+# 				if typeof(item) == TYPE_DICTIONARY:
+# 					# Replace 'Object' with the type you're expecting for array items
+# 					var subObj = preload("YourObjectType.gd").new()  
+# 					dictionaryToObject(item, subObj)
+# 					newArray.append(subObj)
+# 				else:
+# 					newArray.append(item)
+# 			obj.set(key, newArray)
+# 		else:
+# 			obj.set(key, value)
+			
+
+# static func applyJsonToObject(obj: Object, data: Dictionary) -> void:
+# 	for key in data.keys():
+# 		if obj.has_property(key):
+# 			obj.set(key, data[key])
+#
+#static func dictionaryToObject(dict: Dictionary, obj: Object) -> void:
+#	var property_names = []
+#	for property in obj.get_property_list():
+#		property_names.append(property.name)
+#
+#	for key in dict.keys():
+#		if key in property_names:
+#			obj.set(key, dict[key])

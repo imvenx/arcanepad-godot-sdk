@@ -181,8 +181,8 @@ class VibrateEvent extends ArcaneBaseEvent:
 		milliseconds = _milliseconds
 
 class RefreshGlobalStateEvent extends ArcaneBaseEvent:
-	var refreshedGlobalState
+	var refreshedGlobalState:AModels.GlobalState
 
-	func _init(_refreshedGlobalState) -> void:
+	func _init(_refreshedGlobalState:AModels.GlobalState) -> void:
 		name = "RefreshGlobalState"
 		refreshedGlobalState = _refreshedGlobalState

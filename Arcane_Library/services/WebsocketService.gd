@@ -11,15 +11,24 @@ var device_id: String
 var reconnection_delay_miliseconds: int = 1000
 var clientInitData: AModels.ArcaneClientInitData
 var url: String
-var device_type:String
+var deviceType:String
+var isConnected = false
 
-func _init(_url: String, _device_type: String) -> void:
+func _init(_url: String, _deviceType: String) -> void:
 	url = _url
-	device_type = _device_type
+	deviceType = _deviceType
+	# registerEventHandler("RefreshGlobalState", qwe)
 	initWebsocket()
+	
+# func qwe(refreshGlobalStateEvent, from):
+# 	print("qweqweqweqweqw")
+# 	print("Event data:", refreshGlobalStateEvent.refreshedGlobalState.devices)
+# 	print("From:", from)
+# 	emit(ArcaneEvents.OpenArcaneMenuEvent.new(), [])
+
 
 func initWebsocket():
-	clientInitData = AModels.ArcaneClientInitData.new("external", "godot-dev", device_type)
+	clientInitData = AModels.ArcaneClientInitData.new("external", "godot-dev", deviceType)
 	var clientInitDataDictionary = AUtils.objectToDictionary(clientInitData)
 	var stringifiedClientInitData = JSON.stringify(clientInitDataDictionary)
 	var encodedClientInitData = AUtils.urlEncode(stringifiedClientInitData)
@@ -33,20 +42,7 @@ func connectToServer(_url:String) -> void:
 		printerr("Failed to connect:", err)
 		return
 		
-var isConnected = false  # Add this variable to keep track
-func _process(delta: float) -> void:
-#	ws.poll()
-#	var state = ws.get_ready_state()
-#
-#	if state == WebSocketPeer.STATE_OPEN and not has_connected:
-#		print("WebSocket connection opened.")
-#		has_connected = true
-#	elif state == WebSocketPeer.STATE_CLOSED:
-#		print("Connection closed")
-#		set_process(false)
-#		has_connected = false  # Reset the flag
-#		await get_tree().create_timer(float(reconnection_delay_miliseconds) / 1000.0).timeout
-#		reconnect()
+func _process(_delta: float) -> void:
 
 	ws.poll()  # Update the connection state and receive incoming packets
 
@@ -63,7 +59,6 @@ func _process(delta: float) -> void:
 		while ws.get_available_packet_count() > 0:
 			var packet = ws.get_packet()
 			if ws.was_string_packet():
-#				print("Received text data: %s" % packet.get_string_from_utf8())
 				onMessage(packet.get_string_from_utf8())
 			else:
 				print("Received binary data: ", packet)
@@ -74,8 +69,8 @@ func _process(delta: float) -> void:
 		var code = ws.get_close_code()
 		var reason = ws.get_close_reason()
 		print("WebSocket closed with code: %d, reason: %s" % [code, reason])
-		set_process(false)  # Stop _process() from being called
-		isConnected = false  # Reset the flag
+		# set_process(false)  # Stop _process() from being called
+		isConnected = false  
 		await get_tree().create_timer(float(reconnection_delay_miliseconds) / 1000.0).timeout
 		reconnect()
 
@@ -94,18 +89,28 @@ func onClose(was_clean: bool, code: int, reason: String) -> void:
 func onError():
 	print("Error on ws connection")
 
-func onMessage(data: String) -> void:
-#	print(JSON.parse_string(data))
-	var arcaneMsg:ArcaneEvents.ArcaneMessageFrom = JSON.parse_string(data) 
-	print(arcaneMsg.e.name)
-#	if (event_handlers.has(arcaneMsg.e.name)):
-#		for callback in event_handlers[event["e"]["name"]]:
-#			callback(event["e"], event["from"])
+func onMessage(stringData: String) -> void:
+	var arcaneMessageFrom = JSON.parse_string(stringData)
+	print(arcaneMessageFrom.e.name)
 
-#func emit(event: Dictionary, to: Array) -> void:
-#	var msg: Dictionary = {"event": event, "to": to}
-#	print("Sending message: %s" % str(msg))
-#	ws.send(to_json(msg))
+	if (event_handlers.has(arcaneMessageFrom.e.name)):
+		for callback in event_handlers[arcaneMessageFrom.e.name]:
+			if callback is Callable:
+				callback.callv([arcaneMessageFrom.e, arcaneMessageFrom.from])	
+
+func registerEventHandler(eventName: String, handler: Callable) -> void:
+	if not event_handlers.has(eventName):
+		event_handlers[eventName] = []
+	event_handlers[eventName].append(handler)
+
+func emit(event: ArcaneEvents.ArcaneBaseEvent, to: Array) -> void:
+	var msg = ArcaneEvents.ArcaneMessageTo.new(event, to)
+	print("Sending message: ", msg.e.name)
+	
+	var msgDict = AUtils.objectToDictionary(msg)
+	var msgJson = JSON.stringify(msgDict)
+	var byteArray = PackedByteArray(msgJson.to_ascii_buffer())
+	ws.send(byteArray)
 
 #func on(event_name: String, callback: Signal) -> void:
 #	if not event_handlers.has(event_name):
