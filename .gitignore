@@ -1,0 +1,47 @@
+# Godot 4+ specific ignores
+.godot/
+
+# Godot files
+.export/
+.export_templates/
+*.import/
+*.pck
+*.exe
+*.apk
+*.x86_64
+
+# Godot 4 specific files
+.gdignore
+
+# Mono files
+.mono/
+*.sln
+*.userprefs
+*.suo
+*.tmp
+*.pidb
+*.pdb
+*.mdb
+*.swp
+*.swm
+*.swo
+*.bak
+*.swp
+
+# macOS files
+.DS_Store
+
+# Windows files
+Thumbs.db
+desktop.ini
+
+# Linux files
+*~
+.directory
+
+# Other
+*.bak
+
+*.import/
+.import/
+filesystem_cache
