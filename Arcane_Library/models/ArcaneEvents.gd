@@ -3,26 +3,26 @@ class_name ArcaneEvents
 class ArcaneBaseEvent:
 	var name: String
 
-	func _init(name: String):
-		self.name = name
+	func _init(_name: String):
+		name = _name
 
 
 class ArcaneMessageTo:
 	var e: ArcaneBaseEvent
 	var to
 
-	func _init(e: ArcaneBaseEvent, to):
-		self.e = e
-		self.to = to
+	func _init(_e: ArcaneBaseEvent, _to):
+		e = _e
+		to = _to
 
 
 class ArcaneMessageFrom:
 	var e: ArcaneBaseEvent
 	var from: String
 
-	func _init(e: ArcaneBaseEvent, from: String):
-		self.e = e
-		self.from = from
+	func _init(_e: ArcaneBaseEvent, _from: String):
+		e = _e
+		from = _from
 
 
 class InitializeEvent extends ArcaneBaseEvent:
@@ -30,49 +30,49 @@ class InitializeEvent extends ArcaneBaseEvent:
 	var assignedDeviceId: String
 	var globalState
 
-	func _init(assignedClientId: String, assignedDeviceId: String, globalState):
-		self.name = "Initialize"
-		self.assignedClientId = assignedClientId
-		self.assignedDeviceId = assignedDeviceId
-		self.globalState = globalState
+	func _init(_assignedClientId: String, _assignedDeviceId: String, _globalState):
+		name = "Initialize"
+		assignedClientId = _assignedClientId
+		assignedDeviceId = _assignedDeviceId
+		globalState = _globalState
 
 
 class ClientConnectEvent extends ArcaneBaseEvent:
 	var clientId: String
 	var clientType: String
 
-	func _init(clientId: String, clientType: String):
-		self.name = "ClientConnect"
-		self.clientId = clientId
-		self.clientType = clientType
+	func _init(_clientId: String, _clientType: String):
+		name = "ClientConnect"
+		clientId = _clientId
+		clientType = _clientType
 
 
 class UpdateUserEvent extends ArcaneBaseEvent:
 	var user
 
-	func _init(user):
-		self.name = "UpdateUser"
-		self.user = user
+	func _init(_user):
+		name = "UpdateUser"
+		user = _user
 
 
 class OpenArcaneMenuEvent extends ArcaneBaseEvent:
 	func _init():
-		self.name = "OpenArcaneMenu"
+		name = "OpenArcaneMenu"
 
 
 class CloseArcaneMenuEvent extends ArcaneBaseEvent:
 	func _init():
-		self.name = "CloseArcaneMenu"
+		name = "CloseArcaneMenu"
 
 
 class ClientDisconnectEvent extends ArcaneBaseEvent:
 	var clientId: String
 	var clientType
 
-	func _init(clientId: String, clientType):
-		self.name = "ClientDisconnect"
-		self.clientId = clientId
-		self.clientType = clientType
+	func _init(_clientId: String, _clientType):
+		name = "ClientDisconnect"
+		clientId = _clientId
+		clientType = _clientType
 
 
 class IframePadConnectEvent extends ArcaneBaseEvent:
@@ -80,11 +80,11 @@ class IframePadConnectEvent extends ArcaneBaseEvent:
 	var internalId: String
 	var iframeId: String
 
-	func _init(clientId: String, internalId: String, deviceId: String):
-		self.name = "IframePadConnect"
-		self.iframeId = clientId
-		self.internalId = internalId
-		self.deviceId = deviceId
+	func _init(_clientId: String, _internalId: String, _deviceId: String):
+		name = "IframePadConnect"
+		iframeId = _clientId
+		internalId = _internalId
+		deviceId = _deviceId
 
 
 class IframePadDisconnectEvent extends ArcaneBaseEvent:
@@ -92,19 +92,19 @@ class IframePadDisconnectEvent extends ArcaneBaseEvent:
 	var DeviceId: String
 
 	func _init(iframeId: String, deviceId: String):
-		self.name = "IframePadDisconnect"
-		self.IframeId = iframeId
-		self.DeviceId = deviceId
+		name = "IframePadDisconnect"
+		IframeId = iframeId
+		DeviceId = deviceId
 
 
 class StartGetQuaternionEvent extends ArcaneBaseEvent:
 	func _init():
-		self.name = "StartGetQuaternion"
+		name = "StartGetQuaternion"
 
 
 class StopGetQuaternionEvent extends ArcaneBaseEvent:
 	func _init():
-		self.name = "StopGetQuaternion"
+		name = "StopGetQuaternion"
 
 
 class GetQuaternionEvent extends ArcaneBaseEvent:
@@ -113,27 +113,27 @@ class GetQuaternionEvent extends ArcaneBaseEvent:
 	var y: float
 	var z: float
 
-	func _init(w: float, x: float, y: float, z: float):
-		self.name = "GetQuaternion"
-		self.w = w
-		self.x = x
-		self.y = y
-		self.z = z
+	func _init(_w: float, _x: float, _y: float, _z: float):
+		name = "GetQuaternion"
+		w = _w
+		x = _x
+		y = _y
+		z = _z
 
 
 class CalibrateQuaternion extends ArcaneBaseEvent:
 	func _init():
-		self.name = "CalibrateQuaternion"
+		name = "CalibrateQuaternion"
 
 
 class StartGetRotationEulerEvent extends ArcaneBaseEvent:
 	func _init():
-		self.name = "StartGetRotationEuler"
+		name = "StartGetRotationEuler"
 
 
 class StopGetRotationEulerEvent extends ArcaneBaseEvent:
 	func _init():
-		self.name = "StopGetRotationEuler"
+		name = "StopGetRotationEuler"
 
 
 class GetRotationEulerEvent extends ArcaneBaseEvent:
@@ -141,48 +141,48 @@ class GetRotationEulerEvent extends ArcaneBaseEvent:
 	var y: float
 	var z: float
 
-	func _init(x: float, y: float, z: float):
-		self.name = "GetRotationEuler"
-		self.x = x
-		self.y = y
-		self.z = z
+	func _init(_x: float, _y: float, _z: float):
+		name = "GetRotationEuler"
+		x = _x
+		y = _y
+		z = _z
 
 
 class StartGetPointerEvent extends ArcaneBaseEvent:
 	func _init():
-		self.name = "StartGetPointer"
+		name = "StartGetPointer"
 
 
 class StopGetPointerEvent extends ArcaneBaseEvent:
 	func _init():
-		self.name = "StopGetPointer"
+		name = "StopGetPointer"
 
 
 class GetPointerEvent extends ArcaneBaseEvent:
 	var x: float
 	var y: float
 
-	func _init(x: float, y: float):
-		self.name = "GetPointer"
-		self.x = x
-		self.y = y
+	func _init(_x: float, _y: float):
+		name = "GetPointer"
+		x = _x
+		y = _y
 
 
 class CalibratePointer extends ArcaneBaseEvent:
 	func _init():
-		self.name = "CalibratePointer"
+		name = "CalibratePointer"
 
 
 class VibrateEvent extends ArcaneBaseEvent:
 	var milliseconds: int
 
-	func _init(milliseconds: int):
-		self.name = "Vibrate"
-		self.milliseconds = milliseconds
+	func _init(_milliseconds: int):
+		name = "Vibrate"
+		milliseconds = _milliseconds
 
 class RefreshGlobalStateEvent extends ArcaneBaseEvent:
 	var refreshedGlobalState
 
-	func _init(refreshedGlobalState) -> void:
-		self.name = "RefreshGlobalState"
-		self.refreshedGlobalState = refreshedGlobalState
+	func _init(_refreshedGlobalState) -> void:
+		name = "RefreshGlobalState"
+		refreshedGlobalState = _refreshedGlobalState
