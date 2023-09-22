@@ -4,7 +4,11 @@ class ArcaneClient:
 	var id: String
 	var clientType: String
 
-	func _init(_id: String, _clientType: String) -> void:
+	func _init(dict:Dictionary = {}):
+		if dict.size() > 0:
+			AUtils.fillPropertiesFromDictionary(self, dict)
+
+	func params(_id: String, _clientType: String) -> void:
 		id = _id
 		clientType = _clientType
 
@@ -15,9 +19,19 @@ class ArcaneClientType:
 
 class ArcaneDevice:
 	var id: String
-	var clients: Array[ArcaneClient] = []
+	var clients = [ArcaneClient]
 	var deviceType: String
-	var user = null
+	var user:ArcaneUser
+	
+	func _init(dict:Dictionary = {}):
+		if dict.size() > 0:
+			AUtils.fillPropertiesFromDictionary(self, dict)
+			
+	func params(_id: String, _clients, _deviceType:String, _user) -> void:
+		id = _id
+		clients = _clients
+		deviceType = _deviceType
+		user = _user
 
 class ArcaneDeviceType:
 	const pad = "pad"
@@ -45,15 +59,15 @@ class InitIframeQueryParams:
 	var deviceId: String
 
 class GlobalState:
-	var devices: Array[ArcaneDevice] = []
+	var devices = [ArcaneDevice]
 
 	func _init(_devices) -> void:
 		devices = _devices
 
 class InitialState:
-	var pads: Array[ArcanePad] = []
+	var pads = [ArcanePad]
 
-	func _init(_pads) -> void:
+	func _init(_pads:Array[ArcanePad]) -> void:
 		pads = _pads
 
 class ArcaneUser:
@@ -61,7 +75,11 @@ class ArcaneUser:
 	var name: String
 	var color: String
 
-	func _init(_id: String, _name: String, _color: String) -> void:
+	func _init(dict:Dictionary = {}):
+		if dict.size() > 0:
+			AUtils.fillPropertiesFromDictionary(self, dict)
+
+	func params(_id: String, _name: String, _color: String) -> void:
 		id = id
 		name = name
 		color = color

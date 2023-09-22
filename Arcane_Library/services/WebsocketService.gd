@@ -2,12 +2,12 @@ extends Node
 
 class_name WebsocketService
 
-signal event_received(event_data, from)
+# signal event_received(event_data, from)
 
 var ws: WebSocketPeer = WebSocketPeer.new()
-var event_handlers: Dictionary = {}
-var client_id: String
-var device_id: String
+var events: Dictionary = {}
+var clientId: String
+var deviceId: String
 var reconnection_delay_miliseconds: int = 1000
 var clientInitData: AModels.ArcaneClientInitData
 var url: String
@@ -17,14 +17,14 @@ var isConnected = false
 func _init(_url: String, _deviceType: String) -> void:
 	url = _url
 	deviceType = _deviceType
-	on("RefreshGlobalState", qwe)
 	initWebsocket()
+#	on("RefreshGlobalState", qwe)
 	
-func qwe(refreshGlobalStateEvent:Dictionary, from:String):
-	# var asd = AEvents.RefreshGlobalStateEvent.new({refreshGlobalStateEvent: AModels.GlobalState.new("")})
-	print("Event data:", refreshGlobalStateEvent.refreshedGlobalState.devices)
-	print("From:", from)
-	emit(AEvents.OpenArcaneMenuEvent.new(), [])
+#func qwe(refreshGlobalStateEvent:Dictionary, from:String):
+##	var asd = AEvents.RefreshGlobalStateEvent.new({refreshGlobalStateEvent: AModels.GlobalState.new("")})
+##	print("Event data:", refreshGlobalStateEvent.refreshedGlobalState.devices)
+#	print("From:", from)
+#	emit(AEvents.OpenArcaneMenuEvent.new(), [])
 
 func initWebsocket():
 	clientInitData = AModels.ArcaneClientInitData.new("external", "godot-dev", deviceType)
@@ -33,6 +33,18 @@ func initWebsocket():
 	var encodedClientInitData = AUtils.urlEncode(stringifiedClientInitData)
 	url = url + "?clientInitData=" + encodedClientInitData
 	connectToServer(url)
+	on(AEventName.Initialize, onInitialize)
+
+func onInitialize(e, _from):
+	if e.assignedClientId == null or e.assignedClientId == "":
+		printerr("Missing clientId on initialize")
+		return
+	if e.assignedDeviceId == null or e.assignedDeviceId == "":
+		printerr("Missing deviceId on initialize")
+		return
+	clientId = e.assignedClientId
+	deviceId = e.assignedDeviceId
+	print("Client initialized with clientId: %s and deviceId: %s" % [clientId, deviceId])
 
 func connectToServer(_url:String) -> void:
 	print("connecting  to server: ", _url)
@@ -90,41 +102,42 @@ func onError():
 
 func onMessage(stringData: String) -> void:
 	var arcaneMessageFrom = JSON.parse_string(stringData)
-	print("Received Message: ", arcaneMessageFrom.e.name)
+#	print("Received Message: ", arcaneMessageFrom.e.name)
 
-	if (event_handlers.has(arcaneMessageFrom.e.name)):
-		for callback in event_handlers[arcaneMessageFrom.e.name]:
+	if (events.has(arcaneMessageFrom.e.name)):
+		for callback in events[arcaneMessageFrom.e.name]:
 			if callback is Callable:
 				callback.callv([arcaneMessageFrom.e, arcaneMessageFrom.from])	
 
 func on(eventName: String, handler: Callable) -> void:
-	if not event_handlers.has(eventName):
-		event_handlers[eventName] = []
-	event_handlers[eventName].append(handler)
+	if not events.has(eventName):
+		events[eventName] = []
+	events[eventName].append(handler)
 
-func emit(event: AEvents.ArcaneBaseEvent, to: Array) -> void:
+func emit(event: AEvents.ArcaneBaseEvent, to: Array[String]) -> void:
 	var msg = AEvents.ArcaneMessageTo.new(event, to)
-	print("Sending message: ", msg.e.name)
+	print("Sending message: ", msg.e.name, " to: ", to)
 	
 	var msgDict = AUtils.objectToDictionary(msg)
 	var msgJson = JSON.stringify(msgDict)
-	var byteArray = PackedByteArray(msgJson.to_ascii_buffer())
-	ws.send(byteArray)
+#	var byteArray = PackedByteArray(msgJson.to_ascii_buffer())
+#	ws.send(byteArray)
+	ws.send_text(msgJson)
 
 #func on(event_name: String, callback: Signal) -> void:
-#	if not event_handlers.has(event_name):
-#		event_handlers[event_name] = []
-#	event_handlers[event_name].append(callback)
+#	if not events.has(event_name):
+#		events[event_name] = []
+#	events[event_name].append(callback)
 
 #func off(event_name: String, callback: Signal) -> void:
-#	if not event_handlers.has(event_name):
+#	if not events.has(event_name):
 #		return
 #	if callback:
-#		event_handlers[event_name].erase(callback)
-#		if event_handlers[event_name].size() == 0:
-#			event_handlers.erase(event_name)
+#		events[event_name].erase(callback)
+#		if events[event_name].size() == 0:
+#			events.erase(event_name)
 #	else:
-#		event_handlers.erase(event_name)
+#		events.erase(event_name)
 
 #func close() -> void:
 #	ws.close()
@@ -148,6 +161,6 @@ func reconnect() -> void:
 #		return printerr("Missing client id on initialize")
 #	if not e.has("assignedDeviceId"):
 #		return printerr("Missing device id on initialize")
-#	client_id = e["assignedClientId"]
-#	device_id = e["assignedDeviceId"]
-#	print("Client initialized with clientId: %s and deviceId: %s" % [client_id, device_id])
+#	clientId = e["assignedClientId"]
+#	deviceId = e["assignedDeviceId"]
+#	print("Client initialized with clientId: %s and deviceId: %s" % [clientId, deviceId])

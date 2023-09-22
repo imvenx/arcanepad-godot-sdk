@@ -8,17 +8,17 @@ class ArcaneBaseEvent:
 
 
 class ArcaneMessageTo:
+	var to: Array[String]
 	var e: ArcaneBaseEvent
-	var to
 
-	func _init(_e: ArcaneBaseEvent, _to):
+	func _init(_e: ArcaneBaseEvent, _to:Array[String]):
 		e = _e
 		to = _to
 
 
 class ArcaneMessageFrom:
-	var e: ArcaneBaseEvent
 	var from: String
+	var e: ArcaneBaseEvent
 
 	func _init(_e: ArcaneBaseEvent, _from: String):
 		e = _e
@@ -121,7 +121,7 @@ class GetQuaternionEvent extends ArcaneBaseEvent:
 		z = _z
 
 
-class CalibrateQuaternion extends ArcaneBaseEvent:
+class CalibrateQuaternionEvent extends ArcaneBaseEvent:
 	func _init():
 		name = AEventName.CalibrateQuaternion
 
@@ -168,7 +168,7 @@ class GetPointerEvent extends ArcaneBaseEvent:
 		y = _y
 
 
-class CalibratePointer extends ArcaneBaseEvent:
+class CalibratePointerEvent extends ArcaneBaseEvent:
 	func _init():
 		name = AEventName.CalibratePointer
 
