@@ -17,15 +17,14 @@ var isConnected = false
 func _init(_url: String, _deviceType: String) -> void:
 	url = _url
 	deviceType = _deviceType
-	# registerEventHandler("RefreshGlobalState", qwe)
+	on("RefreshGlobalState", qwe)
 	initWebsocket()
 	
-# func qwe(refreshGlobalStateEvent, from):
-# 	print("qweqweqweqweqw")
-# 	print("Event data:", refreshGlobalStateEvent.refreshedGlobalState.devices)
-# 	print("From:", from)
-# 	emit(ArcaneEvents.OpenArcaneMenuEvent.new(), [])
-
+func qwe(refreshGlobalStateEvent:Dictionary, from:String):
+	# var asd = AEvents.RefreshGlobalStateEvent.new({refreshGlobalStateEvent: AModels.GlobalState.new("")})
+	print("Event data:", refreshGlobalStateEvent.refreshedGlobalState.devices)
+	print("From:", from)
+	emit(AEvents.OpenArcaneMenuEvent.new(), [])
 
 func initWebsocket():
 	clientInitData = AModels.ArcaneClientInitData.new("external", "godot-dev", deviceType)
@@ -91,20 +90,20 @@ func onError():
 
 func onMessage(stringData: String) -> void:
 	var arcaneMessageFrom = JSON.parse_string(stringData)
-	print(arcaneMessageFrom.e.name)
+	print("Received Message: ", arcaneMessageFrom.e.name)
 
 	if (event_handlers.has(arcaneMessageFrom.e.name)):
 		for callback in event_handlers[arcaneMessageFrom.e.name]:
 			if callback is Callable:
 				callback.callv([arcaneMessageFrom.e, arcaneMessageFrom.from])	
 
-func registerEventHandler(eventName: String, handler: Callable) -> void:
+func on(eventName: String, handler: Callable) -> void:
 	if not event_handlers.has(eventName):
 		event_handlers[eventName] = []
 	event_handlers[eventName].append(handler)
 
-func emit(event: ArcaneEvents.ArcaneBaseEvent, to: Array) -> void:
-	var msg = ArcaneEvents.ArcaneMessageTo.new(event, to)
+func emit(event: AEvents.ArcaneBaseEvent, to: Array) -> void:
+	var msg = AEvents.ArcaneMessageTo.new(event, to)
 	print("Sending message: ", msg.e.name)
 	
 	var msgDict = AUtils.objectToDictionary(msg)
@@ -144,7 +143,7 @@ func reconnect() -> void:
 
 #const InitializeEvent = preload("res://models/arcaneevents.gd").InitializeEvent
 
-#func on_initialize(e: ArcaneEvents.InitializeEvent) -> void:
+#func on_initialize(e: AEvents.InitializeEvent) -> void:
 #	if not e.has("assignedClientId"):
 #		return printerr("Missing client id on initialize")
 #	if not e.has("assignedDeviceId"):
