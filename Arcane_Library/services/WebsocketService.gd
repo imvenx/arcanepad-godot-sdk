@@ -116,6 +116,12 @@ func emit(event: AEvents.ArcaneBaseEvent, to: Array[String]) -> void:
 	#	var byteArray = PackedByteArray(msgJson.to_ascii_buffer())
 	#	ws.send(byteArray)
 	ws.send_text(msgJson)
+	
+func emitToViews(e):
+	emit(e, Arcane.iframeViewsIds)
+
+func emitToPads(e):
+	emit(e, Arcane.iframePadsIds)
 
 func off(eventName: String, callback: Callable) -> void:
 	if not events.has(eventName):

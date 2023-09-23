@@ -38,7 +38,7 @@ func initialize(initializeEvent, _from):
 			break
 			
 	var initialState = AModels.InitialState.new(pads)
-	AEventEmitter.emit(AEventName.ArcaneClientInitialized, initialState)
+	AGlobalEventEmitter.emit(AEventName.ArcaneClientInitialized, initialState)
 #	emit_signal("arcaneClientInitialized", initialState)
 	
 	msg.off(AEventName.Initialize, initialize)

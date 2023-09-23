@@ -25,7 +25,7 @@
 #     eventHandlers.clear()
 
 
-class_name AEventEmitter
+class_name AGlobalEventEmitter
 
 static var _events: Dictionary = {}
 
