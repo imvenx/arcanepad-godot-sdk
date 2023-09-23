@@ -107,6 +107,13 @@ func on(eventName: String, handler: Callable) -> void:
 		events[eventName] = []
 	events[eventName].append(handler)
 
+func trigger(eventName:String, event):
+	if events.has(eventName):
+		for callback in events[eventName]:
+			if callback is Callable:
+				callback.callv([event])	
+				callback.callv([])	
+	
 func emit(event: AEvents.ArcaneBaseEvent, to: Array[String]) -> void:
 	var msg = AEvents.ArcaneMessageTo.new(event, to)
 	print("Sending message: ", msg.e.name, " to: ", to)

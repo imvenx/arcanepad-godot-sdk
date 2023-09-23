@@ -16,8 +16,6 @@ static var iframeViewsIds = []
 static var iframePadsIds = []
 static var pad:ArcanePad
 
-#signal arcaneClientInitialized(initialState:AModels.InitialState)
-
 func _ready():
 	var url = "wss://localhost:3005/"
 	
@@ -38,7 +36,8 @@ func initialize(initializeEvent, _from):
 			break
 			
 	var initialState = AModels.InitialState.new(pads)
-	AGlobalEventEmitter.emit(AEventName.ArcaneClientInitialized, initialState)
+	msg.trigger(AEventName.ArcaneClientInitialized, initialState)
+#	eventEmitter.emit(AEventName.ArcaneClientInitialized, initialState)
 #	emit_signal("arcaneClientInitialized", initialState)
 	
 	msg.off(AEventName.Initialize, initialize)

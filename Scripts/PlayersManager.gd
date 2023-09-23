@@ -8,13 +8,13 @@ var isGamePaused := false
 var playerScene = preload("res://Player/Player.tscn")
 
 func _ready():
-	AGlobalEventEmitter.on(AEventName.ArcaneClientInitialized, onArcaneClientInitialized)
+	Arcane.msg.on(AEventName.ArcaneClientInitialized, onArcaneClientInitialized)
 
 func onArcaneClientInitialized(initialState: AModels.InitialState):
 	for pad in initialState.pads:
 		createPlayer(pad)
 		
-	initialState.pads[0].onDisconnect(asd)
+#	initialState.pads[0].onDisconnect(asd)
 		
 	Arcane.msg.on(AEventName.IframePadConnect, onIframePadConnect)
 	Arcane.msg.on(AEventName.IframePadDisconnect, onIframePadDisconnect)

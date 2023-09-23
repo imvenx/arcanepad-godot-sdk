@@ -39,7 +39,7 @@ func setupEvents():
 
 func _proxyEvent(event, from):
 	var fullEventName = event.name + '_' + from
-	eventEmitter.send(fullEventName, event)
+	eventEmitter.emit(fullEventName, event)
 #	_triggerEvent(fullEventName, event)
 
 #func _triggerEvent(eventNameWithId: String, event:Dictionary):
