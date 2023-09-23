@@ -21,8 +21,8 @@ func onArcaneClientInitialized(initialState: AModels.InitialState):
 
 func onIframePadConnect(e):
 	var playerExists = false
-	for p in players:
-		if p.Pad.iframeId == e.iframeId:
+	for _player in players:
+		if _player.pad.iframeId == e.iframeId:
 			playerExists = true
 			break
 	if playerExists:
@@ -35,10 +35,10 @@ func asd():
 	print('asdasd')
 
 func onIframePadDisconnect(event):
-	var player = false
-	for p in players:
-		if p.pad.iframeId == event.iframeId:
-			player = p
+	var player = null
+	for _player in players:
+		if _player.pad.iframeId == event.iframeId:
+			player = _player
 			break
 			
 	if player == null:
@@ -56,4 +56,4 @@ func createPlayer(pad):
 
 func destroy_player(player):
 	players.erase(player)
-	player.queue_free()
+	if player:	player.queue_free()

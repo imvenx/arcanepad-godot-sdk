@@ -10,8 +10,8 @@ func initialize(_pad:ArcanePad) -> void:
 	
 	pad.on("Left", onLeft)
 	
-#	pad.startGetQuaternion()
-#	pad.onGetQuaternion(onGetQuaternion)
+	pad.startGetQuaternion()
+	pad.onGetQuaternion(onGetQuaternion)
 	
 func _process(delta):
 	self.transform.basis = Basis(padQuaternion)
