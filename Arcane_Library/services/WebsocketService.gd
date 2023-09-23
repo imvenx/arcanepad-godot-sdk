@@ -126,23 +126,22 @@ func emit(event: AEvents.ArcaneBaseEvent, to: Array[String]) -> void:
 #	ws.send(byteArray)
 	ws.send_text(msgJson)
 
-#func on(event_name: String, callback: Signal) -> void:
-#	if not events.has(event_name):
-#		events[event_name] = []
-#	events[event_name].append(callback)
+func off(eventName: String, callback: Callable) -> void:
+	if not events.has(eventName):
+		return
+	if callback:
+		events[eventName].erase(callback)
+		if events[eventName].size() == 0:
+			events.erase(eventName)
+	else:
+		events.erase(eventName)
+		
+func offAllForEvent(eventName: String) -> void:
+	if events.has(eventName):
+		events.erase(eventName)
 
-#func off(event_name: String, callback: Signal) -> void:
-#	if not events.has(event_name):
-#		return
-#	if callback:
-#		events[event_name].erase(callback)
-#		if events[event_name].size() == 0:
-#			events.erase(event_name)
-#	else:
-#		events.erase(event_name)
-
-#func close() -> void:
-#	ws.close()
+func close() -> void:
+	ws.close()
 
 func reconnect() -> void:
 	print("Attempting to reconnect...")

@@ -14,7 +14,6 @@ static var pad:ArcanePad
 signal arcaneClientInitialized(initialState:AModels.InitialState)
 
 func _ready():
-#	connect("arcaneClientInitialized", asd)
 	var url = "wss://localhost:3005/"
 	
 	if Engine.has_singleton("DebugMode") or ["Windows", "X11", "OSX"].has(OS.get_name()):
@@ -24,11 +23,9 @@ func _ready():
 	msg = WebsocketService.new(url, deviceType)
 	self.add_child(msg)
 
-	msg.on("Initialize", initialize)
-
-#func asd(initialState:AModels.InitialState):
-#	print("asdadasasdasdasd======================", initialState.pads)
-
+	msg.on(AEventName.Initialize, initialize)
+	msg.on(AEventName.RefreshGlobalState, _refreshGlobalState)
+	
 func initialize(initializeEvent, _from):
 	refreshGlobalState(initializeEvent.globalState)
 	for p in pads:
@@ -38,6 +35,11 @@ func initialize(initializeEvent, _from):
 			
 	var initialState = AModels.InitialState.new(pads)
 	emit_signal("arcaneClientInitialized", initialState)
+	
+	msg.off(AEventName.Initialize, initialize)
+
+func _refreshGlobalState(e):
+	refreshGlobalState(e.refreshedGlobalState)
 
 func refreshGlobalState(refreshedGlobalState):
 	devices = refreshedGlobalState.devices
@@ -45,15 +47,9 @@ func refreshGlobalState(refreshedGlobalState):
 	pads = getPads(devices)
 	pads[0].startGetQuaternion()
 	pads[0].onGetQuaternion(asd)
-#	print("paaaaaaaaaaaaaaaaaaaaaaaads", pads)
-#	pads[0].onConnect(asd)
-#	pads[0].onDisconnect(asd)
 	
 func asd(e):
 	print(e)
-	
-#func onDisconnect(e):
-#	print("asdasdsa!!!!!!!", e.name)
 	
 func refreshClientsIds(_devices: Array) -> void:
 	var _internalPadsIds: Array = []
@@ -105,10 +101,10 @@ func getPads(_devices: Array) -> Array[ArcanePad]:
 				internalClientId = client.id
 
 		if iframeClientId == null or iframeClientId == "":
-			print("Tried to set pad but iframeClientId was not found")
+			printerr("Tried to set pad but iframeClientId was not found")
 		
 		if internalClientId == null or internalClientId == "":
-			print("Tried to set pad but internalClientId was not found")
+			printerr("Tried to set pad but internalClientId was not found")
 		
 		if iframeClientId != null and internalClientId != null:
 			var _pad = ArcanePad.new(padDevice.id, internalClientId, iframeClientId, true, padDevice.user)

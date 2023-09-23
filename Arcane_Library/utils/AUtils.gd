@@ -115,7 +115,8 @@ static func dictionaryToObject(dictionary: Dictionary) -> Object:
 	# 	return null
 	
 		
-static func fillPropertiesFromDictionary(obj, _dict: Dictionary):
-	for key in _dict.keys():
-		if obj.has(key):
-			obj.set(key, _dict[key])
+#static func fillPropertiesFromDictionary(obj, _dict: Dictionary):
+#	for key in _dict.keys():
+##		if obj.has(key):
+#		obj.set(key, _dict[key])
+
