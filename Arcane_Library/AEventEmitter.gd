@@ -25,23 +25,24 @@
 #     eventHandlers.clear()
 
 
-class_name EventEmitter
+class_name AEventEmitter
 
-var _events: Dictionary = {}
+static var _events: Dictionary = {}
 
-func on(event: String, callback: Callable):
+static func on(event: String, callback: Callable):
 	if not _events.has(event):
 		_events[event] = []
 	_events[event].append(callback)
 
-func off(event: String, callback: Callable):
+static func off(event: String, callback: Callable):
 	if _events.has(event):
 		if callback:
 			_events[event].erase(callback)
 		else:
 			_events[event] = []
 
-func emit(event: String, data = null):
+static func emit(event: String, data = null):
 	if _events.has(event):
 		for callback in _events[event]:
-			callback.call_func(data)
+			callback.callv([data])
+			callback.callv([])

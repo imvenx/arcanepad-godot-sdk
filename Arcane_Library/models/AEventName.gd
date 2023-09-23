@@ -22,6 +22,8 @@ static var RefreshGlobalState = "RefreshGlobalState";
 
 static var Initialize = "Initialize";
 
+static var ArcaneClientInitialized = "_ArcaneClientInitialized"
+
 static var ClientConnect = "ClientConnect";
 static var ClientDisconnect = "ClientDisconnect";
 
