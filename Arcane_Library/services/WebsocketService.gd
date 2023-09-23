@@ -108,6 +108,8 @@ func onMessage(stringData: String) -> void:
 		for callback in events[arcaneMessageFrom.e.name]:
 			if callback is Callable:
 				callback.callv([arcaneMessageFrom.e, arcaneMessageFrom.from])	
+				callback.callv([arcaneMessageFrom.e])	
+				callback.callv([])	
 
 func on(eventName: String, handler: Callable) -> void:
 	if not events.has(eventName):

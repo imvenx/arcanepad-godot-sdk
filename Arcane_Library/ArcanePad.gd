@@ -46,6 +46,7 @@ func _triggerEvent(eventNameWithId: String, event:Dictionary):
 		for callback in events[eventNameWithId]:
 			if callback is Callable:
 				callback.callv([event])	
+				callback.callv([])	
 
 func on(eventName: String, handler: Callable):
 	if not events.has(eventName):
