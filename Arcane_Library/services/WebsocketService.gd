@@ -2,8 +2,6 @@ extends Node
 
 class_name WebsocketService
 
-# signal event_received(event_data, from)
-
 var ws: WebSocketPeer = WebSocketPeer.new()
 var events: Dictionary = {}
 var clientId: String
@@ -18,13 +16,6 @@ func _init(_url: String, _deviceType: String) -> void:
 	url = _url
 	deviceType = _deviceType
 	initWebsocket()
-#	on("RefreshGlobalState", qwe)
-	
-#func qwe(refreshGlobalStateEvent:Dictionary, from:String):
-##	var asd = AEvents.RefreshGlobalStateEvent.new({refreshGlobalStateEvent: AModels.GlobalState.new("")})
-##	print("Event data:", refreshGlobalStateEvent.refreshedGlobalState.devices)
-#	print("From:", from)
-#	emit(AEvents.OpenArcaneMenuEvent.new(), [])
 
 func initWebsocket():
 	clientInitData = AModels.ArcaneClientInitData.new("external", deviceType, "godot-dev")
@@ -122,8 +113,8 @@ func emit(event: AEvents.ArcaneBaseEvent, to: Array[String]) -> void:
 	
 	var msgDict = AUtils.objectToDictionary(msg)
 	var msgJson = JSON.stringify(msgDict)
-#	var byteArray = PackedByteArray(msgJson.to_ascii_buffer())
-#	ws.send(byteArray)
+	#	var byteArray = PackedByteArray(msgJson.to_ascii_buffer())
+	#	ws.send(byteArray)
 	ws.send_text(msgJson)
 
 func off(eventName: String, callback: Callable) -> void:
@@ -146,22 +137,3 @@ func close() -> void:
 func reconnect() -> void:
 	print("Attempting to reconnect...")
 	connectToServer(url)
-
-#func initialize_ws(url: String, client_init_data: Dictionary) -> void:
-#	ws.uri = "%s?clientInitData=%s" % [url, to_json(client_init_data)]
-#	ws.connect("connection_established", self, "on_open")
-#	ws.connect("connection_error", self, "on_error")
-#	ws.connect("connection_closed", self, "on_close")
-#	ws.connect("data_received", self, "on_message")
-#	ws.connect_to_url(ws.uri)
-
-#const InitializeEvent = preload("res://models/arcaneevents.gd").InitializeEvent
-
-#func on_initialize(e: AEvents.InitializeEvent) -> void:
-#	if not e.has("assignedClientId"):
-#		return printerr("Missing client id on initialize")
-#	if not e.has("assignedDeviceId"):
-#		return printerr("Missing device id on initialize")
-#	clientId = e["assignedClientId"]
-#	deviceId = e["assignedDeviceId"]
-#	print("Client initialized with clientId: %s and deviceId: %s" % [clientId, deviceId])
