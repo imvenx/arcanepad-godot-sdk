@@ -1,12 +1,27 @@
 extends Node
 
 
-func initialize(pad:ArcanePad) -> void:
-	print("Pad user!!", pad.user.name)
+var pad:ArcanePad
+var padQuaternion := Quaternion.IDENTITY
 
-func _ready():
-	pass # Replace with function body.
-
-
+func initialize(_pad:ArcanePad) -> void:
+	print("Pad user!!", _pad.user.name)
+	pad = _pad
+	
+	pad.on("Left", onLeft)
+	
+	pad.startGetQuaternion()
+	pad.onGetQuaternion(onGetQuaternion)
+	
 func _process(delta):
-	pass
+	self.transform.basis = Basis(padQuaternion)
+	
+func onLeft():
+	print("Left!")
+
+func onGetQuaternion(e):
+	padQuaternion.x = -e.x
+	padQuaternion.y = -e.y
+	padQuaternion.z = e.z
+	padQuaternion.w = e.w
+	print(padQuaternion)

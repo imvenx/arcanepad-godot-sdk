@@ -29,20 +29,24 @@ class_name AEventEmitter
 
 static var _events: Dictionary = {}
 
-static func on(event: String, callback: Callable):
-	if not _events.has(event):
-		_events[event] = []
-	_events[event].append(callback)
+static func on(eventName: String, callback: Callable):
+	if not _events.has(eventName):
+		_events[eventName] = []
+	_events[eventName].append(callback)
 
-static func off(event: String, callback: Callable):
-	if _events.has(event):
+static func off(eventName: String, callback: Callable):
+	if _events.has(eventName):
 		if callback:
-			_events[event].erase(callback)
+			_events[eventName].erase(callback)
 		else:
-			_events[event] = []
+			_events[eventName] = []
+			
+static func offAll(eventName: String):
+	if _events.has(eventName):
+		_events[eventName].erase()
 
-static func emit(event: String, data = null):
-	if _events.has(event):
-		for callback in _events[event]:
-			callback.callv([data])
+static func emit(eventName: String, eventData = null):
+	if _events.has(eventName):
+		for callback in _events[eventName]:
+			callback.callv([eventData])
 			callback.callv([])
