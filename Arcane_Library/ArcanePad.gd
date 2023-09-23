@@ -24,8 +24,8 @@ func _init(_deviceId: String, _internalId: String, _iframeId: String, _isConnect
 	
 func setupEvents():
 	
-	msg.on(AEventName.IframePadConnect, _onIframePadConnect)
-	msg.on(AEventName.IframePadDisconnect, _onIframePadDisconnect)
+	msg.on(AEventName.IframePadConnect, func(e): _proxyEvent(e, e.iframeId))
+	msg.on(AEventName.IframePadDisconnect, func(e): _proxyEvent(e, e.iframeId))
 	
 	msg.on(AEventName.GetQuaternion, _proxyEvent)
 	
@@ -49,12 +49,6 @@ func _proxyEvent(event, from):
 #				callback.callv([event])	
 #				callback.callv([])	
 
-func _onIframePadConnect(event, _from):
-	_proxyEvent(event, event.iframeId)
-
-func _onIframePadDisconnect(event, _from):
-	_proxyEvent(event, event.iframeId)
-	
 func onConnect(callback: Callable):
 	eventEmitter.on(AEventName.IframePadConnect + '_' + iframeId, callback)
 	
