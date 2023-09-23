@@ -2,6 +2,11 @@ extends Node
 
 class_name Arcane
 
+# This is enum to prevent user edit on inspector :/
+@export_enum("0.0.1") var LIBRARY_VERSION: String = "0.0.1" 
+
+@export_enum("view", "pad") var deviceType: String = "view"
+
 static var msg: WebsocketService
 static var devices = [AModels.ArcaneDevice]
 static var pads: Array[ArcanePad] = []
@@ -19,7 +24,6 @@ func _ready():
 	if Engine.has_singleton("DebugMode") or ["Windows", "X11", "OSX"].has(OS.get_name()):
 		url = "ws://localhost:3009/"
 
-	var deviceType = "view"
 	msg = WebsocketService.new(url, deviceType)
 	self.add_child(msg)
 
@@ -45,11 +49,11 @@ func refreshGlobalState(refreshedGlobalState):
 	devices = refreshedGlobalState.devices
 	refreshClientsIds(devices)
 	pads = getPads(devices)
-	pads[0].startGetQuaternion()
-	pads[0].onGetQuaternion(asd)
+#	pads[0].startGetQuaternion()
+#	pads[0].onGetQuaternion(asd)
 	
-func asd(e):
-	print(e)
+#func asd(e):
+#	print(e)
 	
 func refreshClientsIds(_devices: Array) -> void:
 	var _internalPadsIds: Array = []

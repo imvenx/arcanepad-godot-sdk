@@ -27,7 +27,7 @@ func _init(_url: String, _deviceType: String) -> void:
 #	emit(AEvents.OpenArcaneMenuEvent.new(), [])
 
 func initWebsocket():
-	clientInitData = AModels.ArcaneClientInitData.new("external", "godot-dev", deviceType)
+	clientInitData = AModels.ArcaneClientInitData.new("external", deviceType, "godot-dev")
 	var clientInitDataDictionary = AUtils.objectToDictionary(clientInitData)
 	var stringifiedClientInitData = JSON.stringify(clientInitDataDictionary)
 	var encodedClientInitData = AUtils.urlEncode(stringifiedClientInitData)
