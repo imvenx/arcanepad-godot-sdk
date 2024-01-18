@@ -17,10 +17,10 @@ static var iframePadsIds = []
 static var pad:ArcanePad
 
 func _ready():
-	var url = "wss://localhost:3005/"
+	var url = "wss://localhost:3685/"
 	
 	if Engine.has_singleton("DebugMode") or ["Windows", "X11", "OSX"].has(OS.get_name()):
-		url = "ws://localhost:3009/"
+		url = "ws://localhost:3689/"
 
 	msg = WebsocketService.new(url, deviceType)
 	self.add_child(msg)

@@ -15,7 +15,6 @@ class ArcaneMessageTo:
 		e = _e
 		to = _to
 
-
 class ArcaneMessageFrom:
 	var from: String
 	var e: ArcaneBaseEvent
