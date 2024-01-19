@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://c053s22k8v8d5"]
+
+[ext_resource type="Script" path="res://Scenes/Pad/Pad.gd" id="1_6lrkq"]
+[ext_resource type="Script" path="res://Scenes/Pad/AttackButton.gd" id="1_kp2kr"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6lrkq")
+
+[node name="AttackButton" type="Button" parent="."]
+layout_mode = 0
+offset_right = 452.0
+offset_bottom = 270.0
+text = "ATTACK"
+script = ExtResource("1_kp2kr")
+
+[connection signal="pressed" from="AttackButton" to="AttackButton" method="_on_pressed"]
