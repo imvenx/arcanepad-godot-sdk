@@ -10,15 +10,14 @@ static var LIBRARY_VERSION: String = "0.0.1"
 static var msg: WebsocketService
 static var devices = [AModels.ArcaneDevice]
 static var pads: Array[ArcanePad] = []
-static var internalViewsIds = []
-static var internalPadsIds = []
-static var iframeViewsIds = []
-static var iframePadsIds = []
+static var internalViewsIds: Array[String] = []
+static var internalPadsIds: Array[String] = []
+static var iframeViewsIds: Array[String] = []
+static var iframePadsIds: Array[String] = []
 static var pad:ArcanePad
 
 
 static func init(instance:Node, _deviceType:String):
-
 
     msg = WebsocketService.new(_deviceType)
     instance.add_child(msg)
@@ -61,10 +60,10 @@ static func refreshGlobalState(refreshedGlobalState):
 #	print(e)
     
 static func refreshClientsIds(_devices: Array) -> void:
-    var _internalPadsIds: Array = []
-    var _internalViewsIds: Array = []
-    var _iframePadsIds: Array = []
-    var _iframeViewsIds: Array = []
+    var _internalPadsIds: Array[String] = []
+    var _internalViewsIds: Array[String] = []
+    var _iframePadsIds: Array[String] = []
+    var _iframeViewsIds: Array[String] = []
     
     for device in _devices:
         if device.deviceType == AModels.ArcaneDeviceType.pad:
@@ -90,14 +89,16 @@ static func getPads(_devices: Array) -> Array[ArcanePad]:
     var _pads:Array[ArcanePad] = []
     
     var padDevices = []
+    
+    
     for device in _devices:
         if device.deviceType == AModels.ArcaneDeviceType.pad:
-            var iframeClients = []
-            for client in device.clients:
-                if client.clientType == AModels.ArcaneClientType.iframe:
-                    iframeClients.append(client)
-            if iframeClients.size() > 0:
-                padDevices.append(device)
+            #var iframeClients = []
+            #for client in device.clients:
+                #if client.clientType == AModels.ArcaneClientType.iframe:
+                    #iframeClients.append(client)
+            #if iframeClients.size() > 0:
+            padDevices.append(device)
 
     for padDevice in padDevices:
         var iframeClientId: String
@@ -109,14 +110,17 @@ static func getPads(_devices: Array) -> Array[ArcanePad]:
             elif client.clientType == AModels.ArcaneClientType.internal:
                 internalClientId = client.id
 
-        if iframeClientId == null or iframeClientId == "":
-            printerr("Tried to set pad but iframeClientId was not found")
+        #if iframeClientId == null or iframeClientId == "":
+            #printerr("Tried to set pad but iframeClientId was not found")
+        #
+        #if internalClientId == null or internalClientId == "":
+            #printerr("Tried to set pad but internalClientId was not found")
         
-        if internalClientId == null or internalClientId == "":
-            printerr("Tried to set pad but internalClientId was not found")
-        
-        if iframeClientId != null and internalClientId != null:
-            var _pad = ArcanePad.new(padDevice.id, internalClientId, iframeClientId, true, padDevice.user)
+        if internalClientId != null:
+            
+            var user = padDevice.user if padDevice.has('user') else {}
+            
+            var _pad = ArcanePad.new(padDevice.id, internalClientId, iframeClientId, true, user)
             _pads.append(_pad)
 
     return _pads

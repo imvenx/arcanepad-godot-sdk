@@ -16,8 +16,10 @@ func initialize(_pad:ArcanePad) -> void:
 func _process(delta):
     self.transform.basis = Basis(padQuaternion)
     
+    
 func onAttack():
     print("Attack!")
+
 
 func onGetQuaternion(e):
     padQuaternion.x = -e.x

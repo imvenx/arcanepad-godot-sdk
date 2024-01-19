@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://btmibu7tloi4g"]
+
+[ext_resource type="Script" path="res://Scenes/View/View.gd" id="2_0utso"]
+
+[node name="View" type="Node3D"]
+script = ExtResource("2_0utso")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.03792)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 100.0
+offset_top = 52.0
+offset_right = 623.0
+offset_bottom = 356.0
+text = "VIEW!"

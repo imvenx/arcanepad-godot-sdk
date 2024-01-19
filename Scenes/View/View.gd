@@ -5,7 +5,7 @@ var players := []  # Array of PlayerController instances
 #var playerPrefab := preload("res://path/to/playerPrefab.tscn")  # Replace with actual path
 var gameStarted := false
 var isGamePaused := false
-var playerScene = preload("res://Scenes/Player/Player.tscn")
+var playerScene = preload("res://Scenes/View/Player/Player.tscn")
 
 func _ready():
     Arcane.init(self, "view")

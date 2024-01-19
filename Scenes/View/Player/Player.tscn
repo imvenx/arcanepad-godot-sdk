@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://yn6xh5meu48w"]
 
-[ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="1_fojdw"]
+[ext_resource type="Script" path="res://Scenes/View/Player/Player.gd" id="1_d673a"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_pjil2"]
 size = Vector3(1, 2, 0.1)
 
 [node name="MeshInstance3D" type="MeshInstance3D"]
 mesh = SubResource("BoxMesh_pjil2")
-script = ExtResource("1_fojdw")
+script = ExtResource("1_d673a")

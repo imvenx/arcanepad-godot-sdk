@@ -12,7 +12,6 @@ var url: String
 var deviceType:String
 var isConnected = false
 
-var host: String
 var protocol:String
 var port:String
 var reverseProxyPort:String
@@ -170,7 +169,7 @@ func emit(event: AEvents.ArcaneBaseEvent, to: Array[String]) -> void:
     #	ws.send(byteArray)
     ws.send_text(msgJson)
     
-func emitToViews(e):
+func emitToViews(e: AEvents.ArcaneBaseEvent):
     emit(e, Arcane.iframeViewsIds)
 
 func emitToPads(e):

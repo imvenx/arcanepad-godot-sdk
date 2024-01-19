@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://c053s22k8v8d5"]
+[gd_scene load_steps=4 format=3 uid="uid://c053s22k8v8d5"]
 
 [ext_resource type="Script" path="res://Scenes/Pad/Pad.gd" id="1_6lrkq"]
 [ext_resource type="Script" path="res://Scenes/Pad/AttackButton.gd" id="1_kp2kr"]
+[ext_resource type="Script" path="res://Scenes/Pad/CalibrateRotationButton.gd" id="2_epnha"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -14,9 +15,19 @@ script = ExtResource("1_6lrkq")
 
 [node name="AttackButton" type="Button" parent="."]
 layout_mode = 0
-offset_right = 452.0
-offset_bottom = 270.0
-text = "ATTACK"
+offset_right = 235.0
+offset_bottom = 104.0
+text = "Attack!"
 script = ExtResource("1_kp2kr")
 
+[node name="CalibrateRotationButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 326.0
+offset_top = 2.0
+offset_right = 543.0
+offset_bottom = 128.0
+text = "Calibrate Rotation"
+script = ExtResource("2_epnha")
+
 [connection signal="pressed" from="AttackButton" to="AttackButton" method="_on_pressed"]
+[connection signal="pressed" from="CalibrateRotationButton" to="CalibrateRotationButton" method="_on_pressed"]

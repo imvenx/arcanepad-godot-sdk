@@ -8,7 +8,7 @@ class ArcaneBaseEvent:
 
 
 class ArcaneMessageTo:
-    var to: Array[String]
+    var to: Array
     var e: ArcaneBaseEvent
 
     func _init(_e: ArcaneBaseEvent, _to:Array[String]):
