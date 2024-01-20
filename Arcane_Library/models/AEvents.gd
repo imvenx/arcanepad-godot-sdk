@@ -168,9 +168,11 @@ class GetPointerEvent extends ArcaneBaseEvent:
 
 
 class CalibratePointerEvent extends ArcaneBaseEvent:
-    func _init():
+    var isTopLeft: bool
+    
+    func _init(_isTopLeft:bool):
         super._init(AEventName.CalibratePointer)
-
+        isTopLeft = _isTopLeft
 
 class SetScreenOrientationPortraitEvent extends ArcaneBaseEvent:
     func _init(): super._init(AEventName.SetScreenOrientationPortrait)

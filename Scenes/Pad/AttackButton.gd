@@ -1,5 +1,5 @@
 extends Button
 
 
-func _on_pressed():
-    Arcane.msg.emitToViews(AEvents.ArcaneBaseEvent.new("Attack"))
+func _ready():
+    connect("pressed", func(): Arcane.msg.emitToViews(AEvents.ArcaneBaseEvent.new("Attack")))

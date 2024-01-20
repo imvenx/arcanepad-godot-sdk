@@ -1,36 +1,60 @@
-[gd_scene load_steps=4 format=3 uid="uid://c053s22k8v8d5"]
+[gd_scene load_steps=6 format=3 uid="uid://c053s22k8v8d5"]
 
 [ext_resource type="Script" path="res://Scenes/Pad/Pad.gd" id="1_6lrkq"]
-[ext_resource type="Script" path="res://Scenes/Pad/AttackButton.gd" id="1_kp2kr"]
-[ext_resource type="Script" path="res://Scenes/Pad/CalibrateRotationButton.gd" id="2_epnha"]
+[ext_resource type="Script" path="res://Scenes/Pad/CalibratePointerTopLeftButton.gd" id="2_l34s1"]
+[ext_resource type="Script" path="res://Scenes/Pad/CalibratePointerBottomRightButton.gd" id="3_6p1dl"]
+[ext_resource type="Script" path="res://Scenes/Pad/CalibrateRotationButton.gd" id="4_au57t"]
+[ext_resource type="Script" path="res://Scenes/Pad/AttackButton.gd" id="4_dkd3i"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
-anchor_right = 0.426
-anchor_bottom = 1.269
-offset_right = 0.247955
-offset_bottom = -0.312012
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+modulate = Color(0.305882, 0.509804, 1, 1)
+self_modulate = Color(0.803922, 0.423529, 0.921569, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
 script = ExtResource("1_6lrkq")
 
-[node name="AttackButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 7.0
-offset_top = 345.0
-offset_right = 242.0
-offset_bottom = 449.0
+[node name="CalibratePointerTopLeftButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 40
+text = "Calibrate Pointer Top Left"
+script = ExtResource("2_l34s1")
+
+[node name="CalibratePointerBottomRightButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 40
+text = "Calibrate Pointer Bottom Right"
+script = ExtResource("3_6p1dl")
+
+[node name="AttackButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 40
 text = "Attack!"
-script = ExtResource("1_kp2kr")
+script = ExtResource("4_dkd3i")
 
-[node name="CalibrateRotationButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 263.0
-offset_top = 330.0
-offset_right = 480.0
-offset_bottom = 456.0
+[node name="CalibrateRotationButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 40
 text = "Calibrate Rotation"
-script = ExtResource("2_epnha")
-
-[connection signal="pressed" from="AttackButton" to="AttackButton" method="_on_pressed"]
-[connection signal="pressed" from="CalibrateRotationButton" to="CalibrateRotationButton" method="_on_pressed"]
+script = ExtResource("4_au57t")

@@ -91,8 +91,8 @@ func stopGetPointer(offAllListeners: bool = false):
 func onGetPointer(callback: Callable):
     eventEmitter.on(AEventName.GetPointer + '_' + internalId, callback)
 
-func calibratePointer():
-    msg.emit(AEvents.CalibratePointerEvent.new(), internalIdList)
+func calibratePointer(isTopLeft:bool):
+    msg.emit(AEvents.CalibratePointerEvent.new(isTopLeft), internalIdList)
     
     
 func setScreenOrientationPortrait():

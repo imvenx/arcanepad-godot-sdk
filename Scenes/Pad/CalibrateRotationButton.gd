@@ -1,5 +1,5 @@
 extends Button
 
 
-func _on_pressed():
-    Arcane.pad.calibrateQuaternion()
+func _ready():
+    connect("pressed", func(): Arcane.pad.calibrateQuaternion())
