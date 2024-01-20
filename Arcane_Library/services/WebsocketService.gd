@@ -147,10 +147,6 @@ func onMessage(stringData: String) -> void:
                 callback.callv([arcaneMessageFrom.e])	
                 callback.callv([])	
 
-func on(eventName: String, handler: Callable) -> void:
-    if not events.has(eventName):
-        events[eventName] = []
-    events[eventName].append(handler)
 
 func trigger(eventName:String, event):
     if events.has(eventName):
@@ -174,20 +170,45 @@ func emitToViews(e: AEvents.ArcaneBaseEvent):
 
 func emitToPads(e):
     emit(e, Arcane.iframePadsIds)
+    
+    
+func on(eventName: String, callback: Callable) -> void:
+    if not events.has(eventName):
+        events[eventName] = []
+        
+    var callbackExists = false
+    if events.has(eventName):
+        for cb in events[eventName]:
+            if(cb == callback):
+                callbackExists = true
+                break
+                
+    if callbackExists: return
+        
+    events[eventName].append(callback)
+
 
 func off(eventName: String, callback: Callable) -> void:
     if not events.has(eventName):
+        prints("<a-warn> Can't off listener for event <>", eventName, "<> because it doesn't exist")
         return
     if callback:
         events[eventName].erase(callback)
         if events[eventName].size() == 0:
             events.erase(eventName)
-    else:
-        events.erase(eventName)
+    #else:
+        #events.erase(eventName)
         
-func offAllForEvent(eventName: String) -> void:
-    if events.has(eventName):
-        events.erase(eventName)
+#func offCallback(eventName: String, callback: Callable) -> void:
+    #if not events.has(eventName):
+        #prints("Can't off listener for event ", eventName, " because it doesn't exist")
+        #return
+    #if callback:
+        
+        
+#func offAllForEvent(eventName: String) -> void:
+    #if events.has(eventName):
+        #events.erase(eventName)
 
 func close() -> void:
     ws.close()

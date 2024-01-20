@@ -113,27 +113,33 @@ func onCloseArcaneMenu(callback: Callable):
     eventEmitter.on(AEventName.CloseArcaneMenu + '_' + iframeId, callback)
 
 
-func send(event: AEvents.ArcaneBaseEvent):
+func emit(event: AEvents.ArcaneBaseEvent):
     msg.emit(event, iframeIdList)
+
 
 func on(eventName: String, callback: Callable):
     var fullEventName = eventName + '_' + iframeId
     eventEmitter.on(fullEventName, callback)
-#	if not events.has(fullEventName):
-#		events[fullEventName] = []
-#	events[fullEventName].append(callback)
+    
+    msg.on(eventName, proxyByIframeId)
 
-    msg.on(eventName, func(event, clientId): 
+ 
+func off(eventName:String):
+    var fullEventName = eventName + '_' + iframeId
+    eventEmitter.off(fullEventName)   
+    msg.off(eventName, proxyByIframeId)
+
+
+#func offCallback(eventName:String, callback:Callable):
+    #var fullEventName = eventName + '_' + iframeId
+    #eventEmitter.offCallback(fullEventName, callback) 
+    #msg.offCallback(eventName, proxyByIframeId)
+      #
+    #msg.offCallback(eventName, proxyByIframeId)
+    #msg.offCallback(eventName, proxyByIframeId)
+
+
+# This is used both on on() and off() methods to unsubscribe properly
+var proxyByIframeId = func(event, clientId): 
             if(clientId == iframeId):
                 _proxyEvent(event, iframeId)
-    )
-
-#func proxyCallback(e, from):
-#	if(from == iframeId):
-#		send()
-
-#func off(padId:String, eventName:String, callback:Callable):
-#	events.clear()
-    
-#func dispose():
-#	events.clear()

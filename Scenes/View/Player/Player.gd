@@ -6,10 +6,19 @@ var padQuaternion := Quaternion.IDENTITY
 
 func initialize(_pad:ArcanePad) -> void:
     
-    print("Pad user!!", _pad.user.name)
     pad = _pad
     
+     # Get User Name
+    print("User Name: ", pad.user.name)
+     # Get User Color
+    print("User Color: #", pad.user.color)
+    
+    # Listen Event
     pad.on("Attack", onAttack)
+    pad.on("SomeEvent", func(): print("something")) 
+    
+    # Stop Listening event
+    pad.off("SomeEvent") 
     
     pad.startGetQuaternion()
     pad.onGetQuaternion(onGetQuaternion)
@@ -18,15 +27,17 @@ func initialize(_pad:ArcanePad) -> void:
     pad.onGetPointer(onGetPointer)
     
     
-func _process(delta):
+func _process(_delta):
     $MeshInstance3D.transform.basis = Basis(padQuaternion)
     
     
 func onAttack():
-    prints(pad.user.name, "attacked")
-    #pad.vibrate(100)
-    pad.send(AEvents.ArcaneBaseEvent.new("HelloFromView"))
-
+    
+    # Send message to pad
+    pad.emit(AEvents.ArcaneBaseEvent.new("HelloFromView")) 
+    
+    AUtils.writeToScreen(self, pad.user.name + " attacked")
+    
 
 func onGetQuaternion(e):
     if(e.w == null || e.x == null || e.y == null || e.z == null): return

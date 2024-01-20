@@ -8,10 +8,10 @@ func _ready():
     Arcane.msg.on("HelloFromView", onHelloFromView)
     
         
-        
 func onArcaneClientInitialized(initialState: AModels.InitialState):
     print(initialState.pads)
     AUtils.writeToScreen(self, "Arcane Client Initialized")
+    
     
 func onHelloFromView():
     AUtils.writeToScreen(self, "View Says Hello")
