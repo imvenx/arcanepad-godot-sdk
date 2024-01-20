@@ -1,5 +1,6 @@
 class_name AEvents
 
+
 class ArcaneBaseEvent:
     var name: String
 
@@ -30,7 +31,7 @@ class InitializeEvent extends ArcaneBaseEvent:
     var globalState
 
     func _init(_assignedClientId: String, _assignedDeviceId: String, _globalState):
-        name = AEventName.Initialize
+        super._init(AEventName.Initialize)
         assignedClientId = _assignedClientId
         assignedDeviceId = _assignedDeviceId
         globalState = _globalState
@@ -41,7 +42,7 @@ class ClientConnectEvent extends ArcaneBaseEvent:
     var clientType: String
 
     func _init(_clientId: String, _clientType: String):
-        name = AEventName.ClientConnect
+        super._init(AEventName.ClientConnect)
         clientId = _clientId
         clientType = _clientType
 
@@ -50,17 +51,17 @@ class UpdateUserEvent extends ArcaneBaseEvent:
     var user
 
     func _init(_user):
-        name = AEventName.UpdateUser
+        super._init(AEventName.UpdateUser)
         user = _user
 
 
 class OpenArcaneMenuEvent extends ArcaneBaseEvent:
     func _init():
-        name = AEventName.OpenArcaneMenu
+        super._init(AEventName.OpenArcaneMenu)
 
 class CloseArcaneMenuEvent extends ArcaneBaseEvent:
     func _init():
-        name = AEventName.CloseArcaneMenu
+        super._init(AEventName.CloseArcaneMenu)
 
 
 class ClientDisconnectEvent extends ArcaneBaseEvent:
@@ -68,7 +69,7 @@ class ClientDisconnectEvent extends ArcaneBaseEvent:
     var clientType
 
     func _init(_clientId: String, _clientType):
-        name = AEventName.ClientDisconnect
+        super._init(AEventName.ClientDisconnect)
         clientId = _clientId
         clientType = _clientType
 
@@ -79,7 +80,7 @@ class IframePadConnectEvent extends ArcaneBaseEvent:
     var iframeId: String
 
     func _init(_clientId: String, _internalId: String, _deviceId: String):
-        name = AEventName.IframePadConnect
+        super._init(AEventName.IframePadConnect)
         iframeId = _clientId
         internalId = _internalId
         deviceId = _deviceId
@@ -90,19 +91,19 @@ class IframePadDisconnectEvent extends ArcaneBaseEvent:
     var DeviceId: String
 
     func _init(iframeId: String, deviceId: String):
-        name = AEventName.IframePadDisconnect
+        super._init(AEventName.IframePadDisconnect)
         IframeId = iframeId
         DeviceId = deviceId
 
 
 class StartGetQuaternionEvent extends ArcaneBaseEvent:
     func _init():
-        name = AEventName.StartGetQuaternion
+        super._init(AEventName.StartGetQuaternion)
 
 
 class StopGetQuaternionEvent extends ArcaneBaseEvent:
     func _init():
-        name = AEventName.StopGetQuaternion
+        super._init(AEventName.StopGetQuaternion)
 
 
 class GetQuaternionEvent extends ArcaneBaseEvent:
@@ -112,7 +113,7 @@ class GetQuaternionEvent extends ArcaneBaseEvent:
     var z: float
 
     func _init(_w: float, _x: float, _y: float, _z: float):
-        name = AEventName.GetQuaternion
+        super._init(AEventName.GetQuaternion)
         w = _w
         x = _x
         y = _y
@@ -121,17 +122,17 @@ class GetQuaternionEvent extends ArcaneBaseEvent:
 
 class CalibrateQuaternionEvent extends ArcaneBaseEvent:
     func _init():
-        name = AEventName.CalibrateQuaternion
+        super._init(AEventName.CalibrateQuaternion)
 
 
 class StartGetRotationEulerEvent extends ArcaneBaseEvent:
     func _init():
-        name = AEventName.StartGetRotationEuler
+        super._init(AEventName.StartGetRotationEuler)
 
 
 class StopGetRotationEulerEvent extends ArcaneBaseEvent:
     func _init():
-        name = AEventName.StopGetRotationEuler
+        super._init(AEventName.StopGetRotationEuler)
 
 
 class GetRotationEulerEvent extends ArcaneBaseEvent:
@@ -140,7 +141,7 @@ class GetRotationEulerEvent extends ArcaneBaseEvent:
     var z: float
 
     func _init(_x: float, _y: float, _z: float):
-        name = AEventName.GetRotationEuler
+        super._init(AEventName.GetRotationEuler)
         x = _x
         y = _y
         z = _z
@@ -148,12 +149,12 @@ class GetRotationEulerEvent extends ArcaneBaseEvent:
 
 class StartGetPointerEvent extends ArcaneBaseEvent:
     func _init():
-        name = AEventName.StartGetPointer
+        super._init(AEventName.StartGetPointer)
 
 
 class StopGetPointerEvent extends ArcaneBaseEvent:
     func _init():
-        name = AEventName.StopGetPointer
+        super._init(AEventName.StopGetPointer)
 
 
 class GetPointerEvent extends ArcaneBaseEvent:
@@ -161,14 +162,14 @@ class GetPointerEvent extends ArcaneBaseEvent:
     var y: float
 
     func _init(_x: float, _y: float):
-        name = AEventName.GetPointer
+        super._init(AEventName.GetPointer)
         x = _x
         y = _y
 
 
 class CalibratePointerEvent extends ArcaneBaseEvent:
     func _init():
-        name = AEventName.CalibratePointer
+        super._init(AEventName.CalibratePointer)
 
 
 class SetScreenOrientationPortraitEvent extends ArcaneBaseEvent:
@@ -182,14 +183,14 @@ class VibrateEvent extends ArcaneBaseEvent:
     var milliseconds: int
 
     func _init(_milliseconds: int):
-        name = AEventName.Vibrate
+        super._init(AEventName.Vibrate)
         milliseconds = _milliseconds
 
 class RefreshGlobalStateEvent extends ArcaneBaseEvent:
     var refreshedGlobalState:AModels.GlobalState
 
     func _init(_refreshedGlobalState:AModels.GlobalState) -> void:
-        name = AEventName.RefreshGlobalState
+        super._init(AEventName.RefreshGlobalState)
         refreshedGlobalState = _refreshedGlobalState
 
     # func _init(dictionary:Dictionary) -> void:
