@@ -16,17 +16,26 @@ static var iframeViewsIds: Array[String] = []
 static var iframePadsIds: Array[String] = []
 static var pad:ArcanePad
 
-
-static func init(instance:Node, _deviceType:String):
-
-    msg = WebsocketService.new(_deviceType)
-    instance.add_child(msg)
+static var _defaultParams = {
+    'deviceType': 'view',
+    'port': '3685',
+    'reverseProxyPort': '3689',
+    'hideMouse': true,
+    'padOrientation': 'Landscape'
+#	'arcaneCode': '',
+}
     
+static func init(instance:Node, initParams = _defaultParams):
+
     print('')
     print('<> <> <> <> <> <> <> <> <> <> <> <> <> <>')
     print('  Using Arcanepad Library version ', LIBRARY_VERSION)
     print('<> <> <> <> <> <> <> <> <> <> <> <> <> <>')
     print('')
+    print('Initializing Client...')
+    
+    msg = WebsocketService.new(initParams.deviceType)
+    instance.add_child(msg)
 
     msg.on(AEventName.Initialize, _onInitialize)
     msg.on(AEventName.RefreshGlobalState, _refreshGlobalState)
@@ -34,11 +43,9 @@ static func init(instance:Node, _deviceType:String):
 static func _onInitialize(initializeEvent, _from):
     refreshGlobalState(initializeEvent.globalState)
     
-    for p in pads:
-        if p.deviceId == msg.deviceId:
-            pad = p
-            break
-            
+    if msg.deviceType == "pad": _padInitialization()
+    elif msg.deviceType == "view": _viewInitialization()
+              
     var initialState = AModels.InitialState.new(pads)
     msg.trigger(AEventName.ArcaneClientInitialized, initialState)
 #	eventEmitter.emit(AEventName.ArcaneClientInitialized, initialState)
@@ -46,8 +53,20 @@ static func _onInitialize(initializeEvent, _from):
     
     msg.off(AEventName.Initialize, _onInitialize)
 
+
+static func _padInitialization():
+    for p in pads:
+        if p.deviceId == msg.deviceId:
+            pad = p
+            break
+
+static func _viewInitialization():
+    pass
+
+
 static func _refreshGlobalState(e):
     refreshGlobalState(e.refreshedGlobalState)
+
 
 static func refreshGlobalState(refreshedGlobalState):
     devices = refreshedGlobalState.devices
@@ -58,6 +77,7 @@ static func refreshGlobalState(refreshedGlobalState):
     
 #func asd(e):
 #	print(e)
+    
     
 static func refreshClientsIds(_devices: Array) -> void:
     var _internalPadsIds: Array[String] = []
@@ -85,11 +105,11 @@ static func refreshClientsIds(_devices: Array) -> void:
     iframePadsIds = _iframePadsIds
     iframeViewsIds = _iframeViewsIds
     
+    
 static func getPads(_devices: Array) -> Array[ArcanePad]:
     var _pads:Array[ArcanePad] = []
     
     var padDevices = []
-    
     
     for device in _devices:
         if device.deviceType == AModels.ArcaneDeviceType.pad:
@@ -101,22 +121,17 @@ static func getPads(_devices: Array) -> Array[ArcanePad]:
             padDevices.append(device)
 
     for padDevice in padDevices:
-        var iframeClientId: String
-        var internalClientId: String
+        var iframeClientId: String = ""
+        var internalClientId: String = ""
         
         for client in padDevice.clients:
             if client.clientType == AModels.ArcaneClientType.iframe:
                 iframeClientId = client.id
             elif client.clientType == AModels.ArcaneClientType.internal:
                 internalClientId = client.id
-
-        #if iframeClientId == null or iframeClientId == "":
-            #printerr("Tried to set pad but iframeClientId was not found")
-        #
-        #if internalClientId == null or internalClientId == "":
-            #printerr("Tried to set pad but internalClientId was not found")
         
-        if internalClientId != null:
+        if internalClientId == null: printerr("<> Arcane Error: Internal Client ID is null")
+        else:
             
             var user = padDevice.user if padDevice.has('user') else {}
             

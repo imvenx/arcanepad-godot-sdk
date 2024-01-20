@@ -1,37 +1,30 @@
 extends Node
 
-# Assuming PlayerController is a custom class you've created
-var players := []  # Array of PlayerController instances
-#var playerPrefab := preload("res://path/to/playerPrefab.tscn")  # Replace with actual path
+var players := [] 
 var gameStarted := false
 var isGamePaused := false
 var playerScene = preload("res://Scenes/View/Player/Player.tscn")
 
 func _ready():
-    Arcane.init(self, "view")
+    Arcane.init(self,{"deviceType": "view"})
     
     Arcane.msg.on(AEventName.ArcaneClientInitialized, onArcaneClientInitialized)
 
 func onArcaneClientInitialized(initialState: AModels.InitialState):
-    for pad in initialState.pads:
-        createPlayer(pad)
-        
-#	initialState.pads[0].onDisconnect(asd)
+    
+    for pad in initialState.pads: createPlayer(pad)
         
     Arcane.msg.on(AEventName.IframePadConnect, onIframePadConnect)
     Arcane.msg.on(AEventName.IframePadDisconnect, onIframePadDisconnect)
+    
 
 func onIframePadConnect(e):
-    var playerExists = false
-    for _player in players:
-        if _player.pad.iframeId == e.iframeId:
-            playerExists = true
-            break
-    if playerExists:
-        return
+    var playerExists = players.any(func(player): return player.pad.iframeId == e.iframeId)
+    if playerExists: return
 
     var pad = ArcanePad.new(e.deviceId, e.internalId, e.iframeId, true, e.user)
     createPlayer(pad)
+    
 
 func onIframePadDisconnect(event):
     var player = null
@@ -46,13 +39,17 @@ func onIframePadDisconnect(event):
 
     destroy_player(player)
 
+
 func createPlayer(pad):
+    if(AUtils.isNullOrEmpty(pad.iframeId)): return
+    
     var newPlayer = playerScene.instantiate()
     print(newPlayer)
     newPlayer.initialize(pad)
     add_child(newPlayer)
     players.append(newPlayer)
+    
 
 func destroy_player(player):
     players.erase(player)
-    if player:	player.queue_free()
+    player.queue_free()

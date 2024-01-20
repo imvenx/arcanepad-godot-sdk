@@ -1,3 +1,5 @@
+extends Node
+
 class_name AUtils
 
 static func urlEncode(s: String) -> String:
@@ -120,3 +122,22 @@ static func fillPropertiesFromDictionary(obj, _dict: Dictionary):
 #		if obj.has(key):
         obj.set(key, _dict[key])
 
+
+static func isNullOrEmpty(val:String):
+    return val == null || val == ""
+    
+    
+static func find(array: Array, condition: Callable) -> Variant:
+    for element in array:
+        if condition.call(element):
+            return element
+    return null
+
+static var textPosY = 0
+static func writeToScreen(el, text:String):
+    prints('writing to screen:', text)
+    var label = Label.new() 
+    label.text = text 
+    el.add_child(label)  
+    label.position = Vector2(0, textPosY) 
+    textPosY += 20
