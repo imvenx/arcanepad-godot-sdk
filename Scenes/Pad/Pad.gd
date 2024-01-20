@@ -1,7 +1,7 @@
 extends Control
 
 func _ready():
-    Arcane.init(self, {"deviceType": "pad"})
+    Arcane.init(self, {"deviceType": "pad", "padOrientation": "portrait"})
 
     Arcane.msg.on(AEventName.ArcaneClientInitialized, onArcaneClientInitialized)
     

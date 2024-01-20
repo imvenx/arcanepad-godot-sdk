@@ -45,6 +45,9 @@ static var StopGetPointer = "_StopGetPointer";
 static var GetPointer = "_GetPointer";
 static var CalibratePointer = "_CalibratePointer";
 
+const SetScreenOrientationPortrait = "_SetScreenOrientationPortrait"
+const SetScreenOrientationLandscape = "_SetScreenOrientationLandscape"
+
 static var Vibrate = "_Vibrate";
 
 static var UpdateUser = "_UpdateUser";

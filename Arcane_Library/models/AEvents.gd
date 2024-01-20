@@ -58,7 +58,6 @@ class OpenArcaneMenuEvent extends ArcaneBaseEvent:
     func _init():
         name = AEventName.OpenArcaneMenu
 
-
 class CloseArcaneMenuEvent extends ArcaneBaseEvent:
     func _init():
         name = AEventName.CloseArcaneMenu
@@ -170,6 +169,13 @@ class GetPointerEvent extends ArcaneBaseEvent:
 class CalibratePointerEvent extends ArcaneBaseEvent:
     func _init():
         name = AEventName.CalibratePointer
+
+
+class SetScreenOrientationPortraitEvent extends ArcaneBaseEvent:
+    func _init(): super._init(AEventName.SetScreenOrientationPortrait)
+        
+class SetScreenOrientationLandscapeEvent extends ArcaneBaseEvent:
+    func _init(): super._init(AEventName.SetScreenOrientationLandscape)
 
 
 class VibrateEvent extends ArcaneBaseEvent:

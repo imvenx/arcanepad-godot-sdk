@@ -16,17 +16,22 @@ static var iframeViewsIds: Array[String] = []
 static var iframePadsIds: Array[String] = []
 static var pad:ArcanePad
 
-static var _defaultParams = {
+static var defaultParams = {
     'deviceType': 'view',
     'port': '3685',
     'reverseProxyPort': '3689',
     'hideMouse': true,
-    'padOrientation': 'Landscape'
+    'padOrientation': 'landscape'
 #	'arcaneCode': '',
 }
-    
-static func init(instance:Node, initParams = _defaultParams):
 
+static var initParams = defaultParams
+    
+static func init(instance:Node, _initParams = defaultParams):
+
+    # Merge the providedParams dictionary into the params dictionary
+    for key in _initParams: initParams[key] = _initParams[key]
+        
     print('')
     print('<> <> <> <> <> <> <> <> <> <> <> <> <> <>')
     print('  Using Arcanepad Library version ', LIBRARY_VERSION)
@@ -55,13 +60,22 @@ static func _onInitialize(initializeEvent, _from):
 
 
 static func _padInitialization():
-    for p in pads:
-        if p.deviceId == msg.deviceId:
-            pad = p
+    for _pad in pads:
+        if _pad.deviceId == msg.deviceId:
+            pad = _pad
             break
+            
+    if pad == null: 
+        printerr('Pad is null on iframe pad initialization')
+        return
+        
+    if initParams.padOrientation == 'landscape': pad.setScreenOrientationLandscape()
+    elif initParams.padOrientation == 'portrait': pad.setScreenOrientationPortrait()
+    
 
 static func _viewInitialization():
-    pass
+    if(initParams.hideMouse == true):
+        Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
 
 static func _refreshGlobalState(e):

@@ -93,6 +93,15 @@ func onGetPointer(callback: Callable):
 
 func calibratePointer():
     msg.emit(AEvents.CalibratePointerEvent.new(), internalIdList)
+    
+    
+func setScreenOrientationPortrait():
+    msg.emit(AEvents.SetScreenOrientationPortraitEvent.new(), internalIdList)
+
+func setScreenOrientationLandscape():
+    msg.emit(AEvents.SetScreenOrientationLandscapeEvent.new(), internalIdList)
+
+    
 
 func vibrate(milliseconds: int):
     msg.emit(AEvents.VibrateEvent.new(milliseconds), internalIdList)
