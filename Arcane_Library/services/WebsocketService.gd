@@ -173,19 +173,25 @@ func emitToPads(e):
     
     
 func on(eventName: String, callback: Callable) -> void:
+    
+    if isCallbackRepeated(eventName, callback): 
+        printerr("<a-warn> WsSvc: Callback for", eventName, "event is repeated, skipping")
+        return
+    
     if not events.has(eventName):
         events[eventName] = []
+                
         
+    events[eventName].append(callback)
+
+func isCallbackRepeated(eventName:String, callback:Callable):
     var callbackExists = false
     if events.has(eventName):
         for cb in events[eventName]:
             if(cb == callback):
                 callbackExists = true
                 break
-                
-    if callbackExists: return
-        
-    events[eventName].append(callback)
+    return callbackExists
 
 
 func off(eventName: String, callback: Callable) -> void:

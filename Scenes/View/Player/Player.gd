@@ -15,6 +15,7 @@ func initialize(_pad:ArcanePad) -> void:
     
     # Listen Event
     pad.on("Attack", onAttack)
+    pad.on("Attack", onAttack)
     pad.on("SomeEvent", func(): print("something")) 
     
     # Stop Listening event

@@ -3,7 +3,7 @@ extends Node
 class_name Arcane
 
 # This is enum to prevent user edit on inspector :/
-static var LIBRARY_VERSION: String = "0.0.1" 
+static var LIBRARY_VERSION: String = "1.0.0" 
 
 #@export_enum("view", "pad") var deviceType: String = "view"
 
@@ -31,12 +31,12 @@ static func init(instance:Node, _initParams = defaultParams):
 
     # Merge the providedParams dictionary into the params dictionary
     for key in _initParams: initParams[key] = _initParams[key]
-        
-    print('')
-    print('<> <> <> <> <> <> <> <> <> <> <> <> <> <>')
-    print('  Using Arcanepad Library version ', LIBRARY_VERSION)
-    print('<> <> <> <> <> <> <> <> <> <> <> <> <> <>')
-    print('')
+       
+
+    print_rich('[color=cyan][b]<> <> <> <> <> <> <> <> <> <> <> <> <> <>
+  Using Arcanepad Library version ', LIBRARY_VERSION,
+    '\n<> <> <> <> <> <> <> <> <> <> <> <> <> <>')
+    
     print('Initializing Client...')
     
     msg = WebsocketService.new(initParams.deviceType)
