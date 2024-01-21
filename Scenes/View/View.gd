@@ -6,7 +6,7 @@ var isGamePaused := false
 var playerScene = preload("res://Scenes/View/Player/Player.tscn")
 
 func _ready():
-    Arcane.init(self, { "deviceType": "view" })
+    Arcane.init(self, { "deviceType": "view", "logLevel": "asd" })
     
     Arcane.msg.on(AEventName.ArcaneClientInitialized, onArcaneClientInitialized)
 

@@ -156,8 +156,10 @@ func trigger(eventName:String, event):
                 callback.callv([])	
     
 func emit(event: AEvents.ArcaneBaseEvent, to: Array[String]) -> void:
+    
     var msg = AEvents.ArcaneMessageTo.new(event, to)
-    print("Sending message: ", msg.e.name, " to: ", to)
+    
+    if Arcane.logVerbose: print("Sending message: ", msg.e.name, " to: ", to)
     
     var msgDict = AUtils.objectToDictionary(msg)
     var msgJson = JSON.stringify(msgDict)

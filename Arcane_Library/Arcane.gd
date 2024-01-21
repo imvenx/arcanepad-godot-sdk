@@ -15,13 +15,16 @@ static var internalPadsIds: Array[String] = []
 static var iframeViewsIds: Array[String] = []
 static var iframePadsIds: Array[String] = []
 static var pad:ArcanePad
+static var logLevel = 'verbose'
+static var logVerbose = true
 
 static var defaultParams = {
     'deviceType': 'view',
     'port': '3685',
     'reverseProxyPort': '3689',
     'hideMouse': true,
-    'padOrientation': 'landscape'
+    'padOrientation': 'landscape',
+    'logLevel': 'verbose'
 #	'arcaneCode': '',
 }
 
@@ -32,6 +35,8 @@ static func init(instance:Node, _initParams = defaultParams):
     # Merge the providedParams dictionary into the params dictionary
     for key in _initParams: initParams[key] = _initParams[key]
        
+    logLevel = initParams.logLevel
+    logVerbose = logLevel == 'verbose'
 
     print_rich('[color=cyan][b]<> <> <> <> <> <> <> <> <> <> <> <> <> <>
   Using Arcanepad Library version ', LIBRARY_VERSION,
