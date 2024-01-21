@@ -15,7 +15,7 @@ func initialize(_pad:ArcanePad) -> void:
     
     # Listen Event
     pad.on("Attack", onAttack)
-    pad.on("Attack", onAttack)
+    
     pad.on("SomeEvent", func(): print("something")) 
     
     # Stop Listening event
@@ -38,6 +38,9 @@ func onAttack():
     pad.emit(AEvents.ArcaneBaseEvent.new("HelloFromView")) 
     
     AUtils.writeToScreen(self, pad.user.name + " attacked")
+    
+func onAttack2():
+    AUtils.writeToScreen(self, pad.user.name + " attacked2")
     
 
 func onGetQuaternion(e):

@@ -96,7 +96,7 @@ func _process(_delta: float) -> void:
     var state = ws.get_ready_state() 
     
     if(state == WebSocketPeer.STATE_CONNECTING):
-        print("Websocket connecting...")
+        if Arcane.logVerbose: print("Websocket connecting...")
 
     if state == WebSocketPeer.STATE_OPEN:
         if(!isConnected):

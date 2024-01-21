@@ -15,8 +15,9 @@ static var internalPadsIds: Array[String] = []
 static var iframeViewsIds: Array[String] = []
 static var iframePadsIds: Array[String] = []
 static var pad:ArcanePad
-static var logLevel = 'verbose'
-static var logVerbose = true
+static var logLevel = ''
+static var logVerbose = false
+#static var logWarn = false
 
 static var defaultParams = {
     'deviceType': 'view',
@@ -37,7 +38,8 @@ static func init(instance:Node, _initParams = defaultParams):
        
     logLevel = initParams.logLevel
     logVerbose = logLevel == 'verbose'
-
+    #logWarn = logLevel == 'verbose' || logLevel == 'warn'
+    
     print_rich('[color=cyan][b]<> <> <> <> <> <> <> <> <> <> <> <> <> <>
   Using Arcanepad Library version ', LIBRARY_VERSION,
     '\n<> <> <> <> <> <> <> <> <> <> <> <> <> <>')
