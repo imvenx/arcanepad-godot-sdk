@@ -175,7 +175,7 @@ func emitToPads(e):
 func on(eventName: String, callback: Callable) -> void:
     
     if isCallbackRepeated(eventName, callback): 
-        printerr("<a-warn> WsSvc: Callback for", eventName, "event is repeated, skipping")
+        print_rich("[color=yellow]<a-warn> WsSvc: Callback for ", eventName, " event is repeated, skipping")
         return
     
     if not events.has(eventName):

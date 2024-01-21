@@ -7,7 +7,7 @@ func on(eventName: String, callback: Callable):
         _events[eventName] = []
                 
     if isCallbackRepeated(eventName, callback): 
-        printerr("<a-warn> EvtEmt: Callback for", eventName, "event is repeated, skipping")
+        print_rich("[color=yellow]<a-warn> EvtEmt: Callback for ", eventName, " event is repeated, skipping")
         return
         
     _events[eventName].append(callback)
