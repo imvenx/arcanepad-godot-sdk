@@ -5,7 +5,7 @@ var count = 0
 func _ready():
     Arcane.init(self)
     Arcane.msg.on(AEventName.ArcaneClientInitialized, onInit)
-    
+      
 func onInit(initialState: AModels.InitialState):
     
     Arcane.pad = ArcanePad.new("d", "i", "if", false, {"name":"test", "color":"1166ff"}) 

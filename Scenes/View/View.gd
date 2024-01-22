@@ -1,5 +1,12 @@
 extends Node
 
+# INFO: This is an implementation of how you could handle your gamepads
+# connection/disconection, but is not definitive, if your game requires
+# a different implementation go ahead and change this. For example maybe
+# you don't want to destroy players on gamepad disconnect, instead you may
+# want to pause the game.
+
+
 var players := [] 
 var gameStarted := false
 var isGamePaused := false
@@ -12,12 +19,16 @@ func _ready():
 
 func onArcaneClientInitialized(initialState: AModels.InitialState):
     
+    # Create a player for each gamepad that existed before the view was created
     for pad in initialState.pads: createPlayer(pad)
         
+    # Listen to gamepads connecting after the view was created and create them if no exist
     Arcane.msg.on(AEventName.IframePadConnect, onIframePadConnect)
+    # Listen for gamepads disconnecting and destroy the player
     Arcane.msg.on(AEventName.IframePadDisconnect, onIframePadDisconnect)
     
 
+# We create a player if it wasn't created before
 func onIframePadConnect(e):
     var playerExists = players.any(func(player): return player.pad.iframeId == e.iframeId)
     if playerExists: return
@@ -27,17 +38,17 @@ func onIframePadConnect(e):
     
 
 func onIframePadDisconnect(event):
-    var player = null
+    var disconnectedPlayer = null
     for _player in players:
         if _player.pad.iframeId == event.iframeId:
-            player = _player
+            disconnectedPlayer = _player
             break
             
-    if player == null:
+    if disconnectedPlayer == null:
         push_error("Player not found to remove on disconnect")
         return
 
-    destroy_player(player)
+    destroy_player(disconnectedPlayer)
 
 
 func createPlayer(pad):

@@ -13,22 +13,28 @@ func initialize(_pad:ArcanePad) -> void:
      # Get User Color
     print("User Color: #", pad.user.color)
     
-    # Listen Event
+    # Listen messages from the gamepad
     pad.on("Attack", onAttack)
+    pad.on("CustomEvent", onCustomEvent)
     
     pad.on("SomeEvent", func(): print("something")) 
-    
-    # Stop Listening event
+    # Stop Listening
     pad.off("SomeEvent") 
     
+    # Send message from viewer to gamepad
+    pad.emit(AEvents.ArcaneBaseEvent.new("HelloFromView")) 
+    
+    # Get rotation quaternion of the gamepad
     pad.startGetQuaternion()
     pad.onGetQuaternion(onGetQuaternion)
     
+    # Get pointer of the gamepad
     pad.startGetPointer()
     pad.onGetPointer(onGetPointer)
     
     
 func _process(_delta):
+    # Rotate player mesh with gamepad rotation
     $MeshInstance3D.transform.basis = Basis(padQuaternion)
     
     
@@ -38,14 +44,17 @@ func onAttack():
     pad.emit(AEvents.ArcaneBaseEvent.new("HelloFromView")) 
     
     AUtils.writeToScreen(self, pad.user.name + " attacked")
-    
-func onAttack2():
-    AUtils.writeToScreen(self, pad.user.name + " attacked2")
+
+
+func onCustomEvent(e):
+    prints("Received custom event with val: ", e.someVal)
     
 
 func onGetQuaternion(e):
     if(e.w == null || e.x == null || e.y == null || e.z == null): return
     
+    # Set gamepad rotation to our padQuaternion variable, which will be used on _process
+    # to rotate the mesh
     padQuaternion.x = -e.x
     padQuaternion.y = -e.y
     padQuaternion.z = e.z
@@ -55,6 +64,7 @@ func onGetQuaternion(e):
 func onGetPointer(e):
     if(e.x == null || e.y == null): return
     
+    # Move the pointer
     var viewport_size = get_viewport().get_size()
 
     var new_x = viewport_size.x * (e.x / 100.0)

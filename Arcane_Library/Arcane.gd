@@ -2,10 +2,7 @@ extends Node
 
 class_name Arcane
 
-# This is enum to prevent user edit on inspector :/
-static var LIBRARY_VERSION: String = "1.0.0" 
-
-#@export_enum("view", "pad") var deviceType: String = "view"
+static var LIBRARY_VERSION: String = "1.0.1" 
 
 static var msg: WebsocketService
 static var devices = [AModels.ArcaneDevice]
