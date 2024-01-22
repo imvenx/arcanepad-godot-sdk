@@ -20,12 +20,12 @@ static func objectToDictionary(obj) -> Dictionary:
         return obj
     
     for property in obj.get_property_list():
-        var name = property.name
+        var propertyName = property.name
         # Skip unwanted or built-in properties.
-        if name in ["RefCounted", "script"] or not property.usage & PROPERTY_USAGE_SCRIPT_VARIABLE:
+        if propertyName in ["RefCounted", "script"] or not property.usage & PROPERTY_USAGE_SCRIPT_VARIABLE:
             continue
         
-        var value = obj.get(name)
+        var value = obj.get(propertyName)
         # Handle recursive conversion of objects, dictionaries, and arrays.
         if value is Object:
             value = objectToDictionary(value)
@@ -46,7 +46,7 @@ static func objectToDictionary(obj) -> Dictionary:
                     newDict[key] = value[key]
             value = newDict
 
-        result[name] = value
+        result[propertyName] = value
     return result
 
 # static func dictionaryToObject(d: Dictionary, obj: Object) -> void:

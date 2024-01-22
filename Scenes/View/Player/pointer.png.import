@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwipc628lb0qy"
-path="res://.godot/imported/Pointer.svg-7b82eff1e69488e2e86dc163f04f7f7d.ctex"
+uid="uid://cjevfdchlk84s"
+path="res://.godot/imported/pointer.png-7d1eef7edf6db64a98e9dd2214b88d7d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/View/Player/Pointer.svg"
-dest_files=["res://.godot/imported/Pointer.svg-7b82eff1e69488e2e86dc163f04f7f7d.ctex"]
+source_file="res://Scenes/View/Player/pointer.png"
+dest_files=["res://.godot/imported/pointer.png-7d1eef7edf6db64a98e9dd2214b88d7d.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false
