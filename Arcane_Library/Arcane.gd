@@ -2,7 +2,7 @@ extends Node
 
 class_name Arcane
 
-static var LIBRARY_VERSION: String = "1.0.1" 
+static var LIBRARY_VERSION: String = "1.1.0" 
 
 static var msg: WebsocketService
 static var devices = [AModels.ArcaneDevice]

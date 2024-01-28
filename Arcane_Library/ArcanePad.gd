@@ -30,11 +30,17 @@ func setupEvents():
     msg.on(AEventName.GetQuaternion, _proxyEvent)
     
     msg.on(AEventName.GetRotationEuler, _proxyEvent)
+
+    msg.on(AEventName.GetLinearAcceleration, _proxyEvent)
     
     msg.on(AEventName.GetPointer, _proxyEvent)
     
     msg.on(AEventName.OpenArcaneMenu, _proxyEvent)
     msg.on(AEventName.CloseArcaneMenu, _proxyEvent)
+    
+    msg.on(AEventName.PauseApp, _proxyEvent)
+    msg.on(AEventName.ResumeApp, _proxyEvent)
+    
 
 
 func _proxyEvent(event, from):
@@ -76,10 +82,23 @@ func stopGetRotationEuler(offAllListeners: bool = false):
     msg.emit(AEvents.StopGetRotationEulerEvent.new(), internalIdList)
     if offAllListeners:
         eventEmitter.offAll(AEventName.GetRotationEuler + '_' + internalId)
-
+      
 func onGetRotationEuler(callback: Callable):
     eventEmitter.on(AEventName.GetRotationEuler + '_' + internalId, callback)
+    
 
+func startGetLinearAcceleration():
+    msg.emit(AEvents.StartGetLinearAccelerationEvent.new(), internalIdList)
+
+func stopGetLinearAcceleration(offAllListeners: bool = false):
+    msg.emit(AEvents.StopGetLinearAccelerationEvent.new(), internalIdList)
+    if offAllListeners:
+        eventEmitter.offAll(AEventName.GetRotationEuler + '_' + internalId)
+        
+func onGetLinearAcceleration(callback: Callable):
+    eventEmitter.on(AEventName.GetLinearAcceleration + '_' + internalId, callback)
+    
+    
 func startGetPointer():
     msg.emit(AEvents.StartGetPointerEvent.new(), internalIdList)
 
@@ -106,12 +125,19 @@ func setScreenOrientationLandscape():
 func vibrate(milliseconds: int):
     msg.emit(AEvents.VibrateEvent.new(milliseconds), internalIdList)
 
+
 func onOpenArcaneMenu(callback: Callable):
     eventEmitter.on(AEventName.OpenArcaneMenu + '_' + iframeId, callback)
 
 func onCloseArcaneMenu(callback: Callable):
     eventEmitter.on(AEventName.CloseArcaneMenu + '_' + iframeId, callback)
 
+
+func onPauseApp(callback: Callable):
+    eventEmitter.on(AEventName.PauseApp + '_' + iframeId, callback)
+    
+func onResume(callback: Callable):
+    eventEmitter.on(AEventName.ResumeApp + '_' + iframeId, callback)
 
 func emit(event: AEvents.ArcaneBaseEvent):
     msg.emit(event, iframeIdList)

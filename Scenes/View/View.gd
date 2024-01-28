@@ -26,8 +26,21 @@ func onArcaneClientInitialized(initialState: AModels.InitialState):
     Arcane.msg.on(AEventName.IframePadConnect, onIframePadConnect)
     # Listen for gamepads disconnecting and destroy the player
     Arcane.msg.on(AEventName.IframePadDisconnect, onIframePadDisconnect)
+
+    # Listen pause app    
+    Arcane.msg.on(AEventName.PauseApp, onPauseApp)
+
+    # Listen resume app    
+    Arcane.msg.on(AEventName.ResumeApp, onResumeApp)
     
 
+func onPauseApp():
+    $PausePanel.show()
+    
+func onResumeApp():
+    $PausePanel.hide()
+        
+    
 # We create a player if it wasn't created before
 func onIframePadConnect(e):
     var playerExists = players.any(func(player): return player.pad.iframeId == e.iframeId)

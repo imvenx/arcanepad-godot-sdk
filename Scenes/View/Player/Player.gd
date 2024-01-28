@@ -27,10 +27,17 @@ func initialize(_pad:ArcanePad) -> void:
     # Get rotation quaternion of the gamepad
     pad.startGetQuaternion()
     pad.onGetQuaternion(onGetQuaternion)
+    # pad.stopGetQuaternion() 
     
     # Get pointer of the gamepad
     pad.startGetPointer()
     pad.onGetPointer(onGetPointer)
+    # pad.stopGetPointer() 
+    
+    # Get linear acceleration of the gamepad
+    #pad.startGetLinearAcceleration()
+    #pad.onGetLinearAcceleration(onGetLinearAcceleration)
+    #pad.stopGetLinearAcceleration() 
     
     
 func _process(_delta):
@@ -71,3 +78,7 @@ func onGetPointer(e):
     var new_y = viewport_size.y * (e.y / 100.0)
     
     $Pointer.position = Vector2(new_x, new_y)
+    
+    
+func onGetLinearAcceleration(e):
+    prints("Linear Acceleration: ", e)

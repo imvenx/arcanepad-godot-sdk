@@ -55,6 +55,15 @@ class UpdateUserEvent extends ArcaneBaseEvent:
         user = _user
 
 
+class PauseAppEvent extends ArcaneBaseEvent:
+    func _init():
+        super._init(AEventName.PauseApp)
+        
+class ResumeAppEvent extends ArcaneBaseEvent:
+    func _init():
+        super._init(AEventName.ResumeApp)
+
+
 class OpenArcaneMenuEvent extends ArcaneBaseEvent:
     func _init():
         super._init(AEventName.OpenArcaneMenu)
@@ -142,6 +151,28 @@ class GetRotationEulerEvent extends ArcaneBaseEvent:
 
     func _init(_x: float, _y: float, _z: float):
         super._init(AEventName.GetRotationEuler)
+        x = _x
+        y = _y
+        z = _z
+        
+
+class StartGetLinearAccelerationEvent extends ArcaneBaseEvent:
+    func _init():
+        super._init(AEventName.StartGetLinearAcceleration)
+
+
+class StopGetLinearAccelerationEvent extends ArcaneBaseEvent:
+    func _init():
+        super._init(AEventName.StopGetLinearAcceleration)
+
+
+class GetLinearAccelerationEvent extends ArcaneBaseEvent:
+    var x: float
+    var y: float
+    var z: float
+
+    func _init(_x: float, _y: float, _z: float):
+        super._init(AEventName.GetLinearAcceleration)
         x = _x
         y = _y
         z = _z

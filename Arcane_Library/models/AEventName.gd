@@ -18,6 +18,9 @@ static var EnterDevMode = "_EnterDevMode";
 static var EnterApp = "_EnterApp";
 static var ExitApp = "_ExitApp";
 
+static var PauseApp = "_PauseApp";
+static var ResumeApp = "_ResumeApp";
+
 static var RefreshGlobalState = "_RefreshGlobalState";
 
 static var Initialize = "_Initialize";
@@ -39,6 +42,10 @@ static var StartGetRotationEuler = "_StartGetRotationEuler";
 static var StopGetRotationEuler = "_StopGetRotationEuler";
 static var GetRotationEuler = "_GetRotationEuler";
 static var CalibrateRotationEuler = "_CalibrateRotationEuler";
+
+static var StartGetLinearAcceleration = "_StartGetLinearAcceleration"
+static var StopGetLinearAcceleration = "_StopGetLinearAcceleration"
+static var GetLinearAcceleration = "_GetLinearAcceleration"
 
 static var StartGetPointer = "_StartGetPointer";
 static var StopGetPointer = "_StopGetPointer";
