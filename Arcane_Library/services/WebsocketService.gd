@@ -48,6 +48,9 @@ func isInsideIframe():
 func getQueryParamsDictionary():
 	var queryParams = {}
 	var query_string:String = JavaScriptBridge.eval("window.location.search.substring(1);")
+	
+	#AUtils.writeToScreen(self, query_string)
+	
 	if query_string.is_empty():
 		return queryParams  # Return empty dictionary if no query string
 
